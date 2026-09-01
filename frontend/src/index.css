@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/*
+  BIS SĀRTHI design tokens.
+  Navy = authority/trust (echoes BIS's own institutional identity).
+  Saffron = Indian identity + call-to-action warmth, used sparingly.
+  Green = "verified / evidence-backed" — reserved for citation & confidence UI only,
+  so it stays meaningful instead of decorative.
+*/
+@theme {
+  --font-sans: "Inter", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy-950: #060b18;
+  --color-navy-900: #0a1128;
+  --color-navy-800: #101c3d;
+  --color-navy-700: #182a56;
+  --color-navy-600: #223b73;
+  --color-navy-500: #2f4f94;
+
+  --color-saffron-600: #d9720c;
+  --color-saffron-500: #f2900f;
+  --color-saffron-400: #f7a836;
+  --color-saffron-100: #fef1de;
+
+  --color-verified-600: #157a4a;
+  --color-verified-500: #1f9d5f;
+  --color-verified-100: #e3f7ec;
+
+  --color-paper-50: #fbfaf7;
+  --color-paper-100: #f5f3ee;
+  --color-paper-200: #ece8e0;
+
+  --shadow-card: 0 1px 2px rgba(10, 17, 40, 0.04), 0 8px 24px -12px rgba(10, 17, 40, 0.12);
+  --shadow-card-hover: 0 4px 10px rgba(10, 17, 40, 0.06), 0 16px 32px -12px rgba(10, 17, 40, 0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-paper-50);
+  color: var(--color-navy-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Subtle dotted texture used behind the hero — evokes a map/network, not decoration for its own sake. */
+.bg-grid {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--color-paper-200);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
