@@ -2,8 +2,10 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
-export default defineConfig({
+// Served from https://<user>.github.io/BIS-SARTHI/, so assets need that prefix.
+// Local dev stays at "/" — set via the `base` option only for production builds.
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/BIS-SARTHI/' : '/',
   plugins: [react(), tailwindcss()],
   server: {
     port: 5173,
@@ -11,4 +13,4 @@ export default defineConfig({
       '/api': 'http://127.0.0.1:8000',
     },
   },
-})
+}))
