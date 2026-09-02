@@ -37,6 +37,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* This palette is deliberately light-only. Declaring the scheme opts the page out
+     of Chrome's auto-dark-mode, which otherwise force-inverts the cards to dark grey
+     and rewrites link colours to blue. */
+  color-scheme: light;
 }
 
 body {
