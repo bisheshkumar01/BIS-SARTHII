@@ -11,7 +11,7 @@ export default function Forms() {
     <div className="mx-auto max-w-4xl px-6 py-14">
       <h1 className="font-display text-3xl font-extrabold text-navy-900">Forms Hub</h1>
       <p className="mt-2 text-navy-700/65">
-        Ask what you need in plain language — Sārthi finds the right form for your stage.
+        Ask what you need in plain language — Sarthi finds the right form for your stage.
       </p>
 
       <div className="mt-6 flex items-center gap-2 rounded-2xl border border-navy-900/10 bg-white p-2 shadow-sm">

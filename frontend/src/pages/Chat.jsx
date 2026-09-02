@@ -9,7 +9,7 @@ const suggestions = [
 ]
 
 const seedMessages = [
-  { role: 'assistant', text: "Hi, I'm Sārthi — your BIS compliance guide. Describe your product, or ask about a standard, certification, or form to get started." },
+  { role: 'assistant', text: "Hi, I'm Sarthi — your BIS compliance guide. Describe your product, or ask about a standard, certification, or form to get started." },
 ]
 
 export default function Chat() {

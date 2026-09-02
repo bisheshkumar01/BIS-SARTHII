@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import Logo from './Logo.jsx'
 
 const links = [
-  { to: '/chat', label: 'Ask Sārthi' },
+  { to: '/chat', label: 'Ask Sarthi' },
   { to: '/scan', label: 'Scan Product' },
   { to: '/standards', label: 'Find Standard' },
   { to: '/forms', label: 'Forms Hub' },
@@ -16,7 +16,7 @@ export default function Navbar() {
         <NavLink to="/" className="flex items-center gap-2.5">
           <Logo className="h-8 w-8" />
           <span className="font-display text-lg font-extrabold tracking-tight text-navy-900">
-            BIS SĀRTHI
+            BIS SARTHI
           </span>
         </NavLink>
 
@@ -50,7 +50,7 @@ export default function Navbar() {
             to="/chat"
             className="hidden rounded-full bg-saffron-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-saffron-600 sm:block"
           >
-            Ask Sārthi
+            Ask Sarthi
           </NavLink>
         </div>
       </div>

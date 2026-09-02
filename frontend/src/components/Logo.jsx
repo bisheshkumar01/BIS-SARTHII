@@ -1,6 +1,6 @@
 /**
  * Compass-in-shield mark: "shield" nods to BIS's regulatory trust,
- * the compass needle nods to SĀRTHI's job — guiding you to the right standard.
+ * the compass needle nods to SARTHI's job — guiding you to the right standard.
  */
 export default function Logo({ className = 'h-8 w-8' }) {
   return (

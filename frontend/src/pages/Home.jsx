@@ -18,7 +18,7 @@ import {
 } from 'lucide-react'
 
 const actions = [
-  { to: '/chat', icon: MessageCircleQuestion, label: 'Ask Sārthi', desc: 'Ask any BIS or standards question in plain language.' },
+  { to: '/chat', icon: MessageCircleQuestion, label: 'Ask Sarthi', desc: 'Ask any BIS or standards question in plain language.' },
   { to: '/scan', icon: ScanLine, label: 'Scan Product', desc: 'Upload a photo or label — we read it for you.' },
   { to: '/standards', icon: FileSearch, label: 'Find Standard', desc: 'Match your product to the right Indian Standard.' },
   { to: '/forms', icon: ClipboardList, label: 'Find Form', desc: 'Locate the exact BIS form you need, ranked by relevance.' },
@@ -26,7 +26,7 @@ const actions = [
 ]
 
 const steps = [
-  { n: '01', title: 'Describe or scan your product', desc: 'Type a description or upload a photo/label — Sārthi extracts what matters.' },
+  { n: '01', title: 'Describe or scan your product', desc: 'Type a description or upload a photo/label — Sarthi extracts what matters.' },
   { n: '02', title: 'Get matched standards, with proof', desc: 'Ranked Indian Standards, each with a relevance score and the evidence behind it.' },
   { n: '03', title: 'Understand certification & forms', desc: 'Mandatory, voluntary, or unclear — stated plainly, with the exact forms required.' },
   { n: '04', title: 'Follow your compliance roadmap', desc: 'A personalised, step-by-step path from product to certified.' },
@@ -69,7 +69,7 @@ export default function Home() {
               <span className="text-saffron-400"> BIS compliance</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/70">
-              Describe your product or scan its label — Sārthi finds the applicable Indian
+              Describe your product or scan its label — Sarthi finds the applicable Indian
               Standard, explains certification, surfaces the right forms, and builds you a
               step-by-step roadmap. Every answer backed by an official BIS source.
             </p>
@@ -79,7 +79,7 @@ export default function Home() {
                 to="/chat"
                 className="inline-flex items-center gap-2 rounded-full bg-saffron-500 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-saffron-500/20 transition hover:bg-saffron-600"
               >
-                Ask Sārthi <ArrowRight className="h-4 w-4" />
+                Ask Sarthi <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/scan"
@@ -183,7 +183,7 @@ export default function Home() {
             <p className="mt-4 max-w-lg text-base leading-relaxed text-navy-700/70">
               Every answer carries a confidence level and an evidence trail back to its source
               document and official BIS link. When the retrieved evidence isn't strong enough,
-              Sārthi tells you plainly instead of guessing.
+              Sarthi tells you plainly instead of guessing.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {['HIGH confidence', 'MEDIUM confidence', 'LOW confidence', 'UNVERIFIED'].map((c) => (
@@ -267,7 +267,7 @@ export default function Home() {
                 to="/chat"
                 className="rounded-full bg-saffron-500 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-saffron-600"
               >
-                Ask Sārthi
+                Ask Sarthi
               </Link>
               <Link
                 to="/roadmap"
