@@ -1,4 +1,4 @@
-"""Database engine and session. SQLite today, Postgres by changing DATABASE_URL."""
+"""Database engine and session. SQLite today, Postgres by changing DATABASE_URrL."""
 
 from collections.abc import Generator
 
