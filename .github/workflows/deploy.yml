@@ -1,8 +1,10 @@
 name: Deploy frontend to GitHub Pages
 
+# Manual-only. Deployment moved to Vercel, which serves the frontend AND the Python API
+# together (see vercel.json); this workflow publishes the frontend alone, so leaving it on
+# push meant every commit shipped a Pages build whose /api calls 404. Kept for the fallback
+# case — run it from the Actions tab if Vercel is ever unavailable.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

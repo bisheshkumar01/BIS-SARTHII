@@ -8,8 +8,11 @@
   so it stays meaningful instead of decorative.
 */
 @theme {
-  --font-sans: "Inter", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Manrope", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
+  /* Work Sans for reading: clean, modern, high legibility at small sizes.
+     Jost for display: a geometric grotesque in the Futura lineage — perfect circles,
+     single-storey 'a', very high contrast between headline and body voice. */
+  --font-sans: "Work Sans", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Jost", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
 
   --color-navy-950: #060b18;
   --color-navy-900: #0a1128;
@@ -50,8 +53,38 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Geometric faces are drawn on a wide default sidebearing, which reads as loose at
+   display sizes. Pulling the tracking in is what makes Jost look like the reference
+   Futura setting rather than like a wide default. */
 .font-display {
   font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Big headlines get tighter still, and the optical weight bumped to 800/900 —
+   geometric sans are drawn light and need the extra mass to carry a hero. */
+h1.font-display,
+.display-xl {
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+/* The eyebrow labels above each section: small, wide, uppercase — the counterweight
+   that lets the headline read as large without shouting. */
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.6875rem;
+}
+
+/* Devanagari has no geometric-sans equivalent; Jost has no Devanagari coverage at all,
+   so Hindi headings fall through to Noto and would otherwise inherit Latin tracking
+   that crowds the matras. */
+:lang(hi) .font-display,
+.font-display:lang(hi) {
+  letter-spacing: 0;
 }
 
 /* Subtle dotted texture used behind the hero — evokes a map/network, not decoration for its own sake. */
@@ -71,4 +104,198 @@ body {
 .card-hover:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-2px);
+}
+
+/* ============================================================
+   Motion
+   Interaction polish, kept in CSS so it costs no JS bundle. The house style is
+   *subtle*: short durations, small distances, and an ease-out curve so movement
+   decelerates into place instead of arriving mechanically.
+   ============================================================ */
+
+@keyframes shimmer {
+  100% { transform: translateX(200%); }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Chat messages and cards entering the page. --delay staggers a list without JS. */
+.animate-rise {
+  animation: rise 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.animate-pop {
+  animation: pop-in 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* A light sweep across a dark surface, used on the hero CTA. The ::after is clipped by
+   overflow-hidden on the button and only animates while hovered, so it never loops in
+   the background burning paint time. */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+}
+
+.shine:hover::after {
+  animation: shimmer 0.9s ease-out;
+}
+
+/* Nav / chip underline that grows from the centre on hover. */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.35rem;
+  height: 1.5px;
+  width: 0;
+  border-radius: 2px;
+  background: var(--color-saffron-500);
+  transform: translateX(-50%);
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-underline:hover::after {
+  width: 45%;
+}
+
+/* Cards already have .card-hover for lift; this adds a warm border on approach so the
+   whole surface responds, not just its shadow. */
+.card-hover {
+  transition:
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+}
+
+.card-hover:hover {
+  border-color: var(--color-saffron-400);
+}
+
+/* Icon tiles inside the action cards. */
+.icon-tile {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .icon-tile {
+  transform: translateY(-1px) scale(1.06);
+}
+
+/* Buttons: a small press so a click feels acknowledged. */
+.press {
+  transition: transform 0.12s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Everything above is decoration. Anyone who has asked their OS to reduce motion gets the
+   final state immediately — the UI must never depend on an animation having played. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card-hover:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Hero mesh gradient
+   A shader-style animated gradient built from layered radial blobs. shadergradient.co and
+   friends do this on a WebGL canvas, which means three.js + react-three-fiber — around 150 KB
+   gzipped and a GPU context, for something sitting behind text. Four CSS radial-gradients on
+   a slow transform loop are visually equivalent at this scale and cost nothing to download.
+   ============================================================ */
+
+.mesh-gradient {
+  position: absolute;
+  inset: -25%;
+  /* Larger than the hero so the blobs can drift without their edges entering the frame. */
+  background-image:
+    radial-gradient(circle at 22% 28%, rgba(242, 144, 15, 0.30), transparent 42%),
+    radial-gradient(circle at 78% 18%, rgba(47, 79, 148, 0.42), transparent 46%),
+    radial-gradient(circle at 62% 78%, rgba(217, 114, 12, 0.20), transparent 44%),
+    radial-gradient(circle at 12% 74%, rgba(34, 59, 115, 0.38), transparent 46%);
+  filter: blur(58px);
+  will-change: transform;
+  animation: mesh-drift 26s ease-in-out infinite alternate;
+}
+
+/* Two blobs move against the other two, so the field reshapes instead of merely sliding.
+   Rotation stays under 4deg — past that the movement becomes noticeable, and anything the
+   eye tracks behind a headline is a distraction rather than atmosphere. */
+@keyframes mesh-drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(2.5%, -2%, 0) rotate(2.5deg) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-2%, 2.5%, 0) rotate(-2deg) scale(1.04);
+  }
+}
+
+/* A faint saffron sheen crossing the hero every 14s, so the surface reads as lit rather
+   than flat. Very low opacity by design: it should register only peripherally. */
+.mesh-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(247, 168, 54, 0.07) 50%,
+    transparent 62%
+  );
+  background-size: 260% 260%;
+  animation: sheen-sweep 14s ease-in-out infinite;
+}
+
+@keyframes sheen-sweep {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Motion is atmosphere here, never information — hold the first frame and stop. */
+@media (prefers-reduced-motion: reduce) {
+  .mesh-gradient,
+  .mesh-sheen {
+    animation: none;
+  }
 }

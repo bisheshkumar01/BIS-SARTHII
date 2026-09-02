@@ -1,0 +1,198 @@
+[
+  {
+    "title": "BIS Act, 2016 - role of the Bureau",
+    "source_url": "https://www.bis.gov.in/the-bureau/about-bis/",
+    "doc_type": "act",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Mandate",
+        "content": "The Bureau of Indian Standards (BIS) is the National Standards Body of India, established under the BIS Act, 2016. It is responsible for the harmonious development of the activities of standardisation, marking and quality certification of goods. BIS formulates Indian Standards (IS), operates product certification schemes, runs the hallmarking scheme for precious metal articles, and carries out laboratory testing and market surveillance."
+      },
+      {
+        "heading": "Standard Mark and certification",
+        "content": "Under the BIS Act, 2016, a licence or certificate of conformity is required before applying the Standard Mark to a product. Applying the Standard Mark without a valid licence, or using a mark that imitates it, is an offence under the Act. Certification is voluntary for most products; it becomes mandatory where a Quality Control Order (QCO) issued by the relevant Government ministry brings the product under compulsory certification."
+      }
+    ]
+  },
+  {
+    "title": "Quality Control Orders and when BIS certification is mandatory",
+    "source_url": "https://www.bis.gov.in/product-certification/products-under-compulsory-certification/",
+    "doc_type": "scheme",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "How a product becomes mandatory",
+        "content": "BIS certification is voluntary by default. A product requires mandatory certification only when a Quality Control Order (QCO) notified by the administrative ministry brings it under compulsory certification, or when it is listed under the Compulsory Registration Scheme (CRS) for electronics and IT goods. Because QCOs are notified and amended continuously by different ministries, the authoritative and current list of products under compulsory certification is the list published by BIS. Always confirm against that list before concluding that a product is or is not mandatory."
+      },
+      {
+        "heading": "Consequences of the distinction",
+        "content": "If a product is covered by a QCO, it cannot be manufactured, imported, sold, distributed or stored for sale without a valid BIS licence and the Standard Mark. If a product is not covered by any QCO or by the CRS, certification is voluntary: a manufacturer may still seek a licence to use the ISI mark as a mark of quality, but is not legally required to."
+      }
+    ]
+  },
+  {
+    "title": "ISI Mark - Scheme I product certification",
+    "source_url": "https://www.bis.gov.in/product-certification/",
+    "doc_type": "scheme",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "What Scheme I covers",
+        "content": "The ISI mark is granted under Scheme I of Schedule II of the BIS (Conformity Assessment) Regulations, 2018. It is the main product certification route for domestic manufacturers. A licence is granted for a specific product, manufactured to a specific Indian Standard, at a specific factory address. A separate licence is needed for each product and each manufacturing location."
+      },
+      {
+        "heading": "Grant of licence - outline of the process",
+        "content": "The broad sequence for an ISI licence is: identify the applicable Indian Standard for the product; ensure the factory has the in-house testing facilities and trained personnel that the standard requires; apply online through the BIS portal with the required documents and fees; a BIS officer carries out a factory evaluation and draws samples; the samples are tested in a BIS-recognised laboratory; if the factory and the samples both conform, the licence is granted and the firm may apply the Standard Mark under an operating licence agreement. Timelines and fees are set out in the BIS (Conformity Assessment) Regulations, 2018 and are revised from time to time."
+      },
+      {
+        "heading": "Obligations after the licence is granted",
+        "content": "A BIS licence is granted for a fixed period and must be renewed before it expires. The licensee must operate a scheme of inspection and testing, maintain test records, and permit BIS surveillance including factory visits and market sample draws. Non-conforming samples, or failure to maintain the required in-house testing capability, can lead to the licence being suspended or cancelled."
+      }
+    ]
+  },
+  {
+    "title": "Compulsory Registration Scheme (CRS) for electronics and IT goods",
+    "source_url": "https://www.bis.gov.in/product-certification/compulsory-registration-scheme/",
+    "doc_type": "scheme",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "What CRS is",
+        "content": "The Compulsory Registration Scheme operates under Scheme II of Schedule II of the BIS (Conformity Assessment) Regulations, 2018. It covers electronics and information technology goods notified under the Electronics and Information Technology Goods (Requirements for Compulsory Registration) Order issued by the Ministry of Electronics and Information Technology (MeitY). Products registered under CRS carry the Standard Mark together with a registration number."
+      },
+      {
+        "heading": "How CRS differs from the ISI mark",
+        "content": "CRS is a registration route based on a self-declaration of conformity supported by a test report, rather than the factory evaluation used for the ISI mark under Scheme I. The manufacturer has samples tested in a BIS-recognised laboratory, submits the test report with the application, and BIS grants a registration number. There is no routine factory inspection at the registration stage, although BIS conducts market surveillance. Both domestic and foreign manufacturers may register under CRS; a foreign manufacturer must have an Authorised Indian Representative."
+      }
+    ]
+  },
+  {
+    "title": "Foreign Manufacturers Certification Scheme (FMCS)",
+    "source_url": "https://www.bis.gov.in/product-certification/foreign-manufacturers-certification-scheme/",
+    "doc_type": "scheme",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Who applies under FMCS",
+        "content": "Manufacturers located outside India who wish to apply the ISI mark to products exported to India apply under the Foreign Manufacturers Certification Scheme. The applicant must nominate an Authorised Indian Representative (AIR) resident in India, who is answerable to BIS for the licence. The scheme otherwise follows Scheme I: the factory is evaluated, samples are drawn and tested, and the licence names the specific product, standard and factory address."
+      }
+    ]
+  },
+  {
+    "title": "Hallmarking of gold and silver articles",
+    "source_url": "https://www.bis.gov.in/hallmarking/",
+    "doc_type": "scheme",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Scope of hallmarking",
+        "content": "Hallmarking certifies the purity of precious metal articles. For gold jewellery and artefacts, hallmarking is mandatory in the districts notified by the Government. Jewellers must register with BIS and have articles hallmarked at a BIS-recognised Assaying and Hallmarking Centre. A hallmark comprises the BIS logo, the purity or fineness grade, and a six-digit alphanumeric HUID (Hallmark Unique Identification). Hallmarking of silver articles is voluntary."
+      },
+      {
+        "heading": "Registration is per jeweller, not per article",
+        "content": "A jeweller obtains a single registration from BIS covering their premises, rather than a product licence of the kind used for manufactured goods. The registration is obtained online. The continuing obligation is to have each covered article hallmarked before it is sold."
+      }
+    ]
+  },
+  {
+    "title": "IS 10500:2012 - Drinking Water Specification",
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/standard_review/Indian_Standards",
+    "doc_type": "standard",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Scope",
+        "content": "IS 10500:2012 'Drinking Water - Specification' prescribes the requirements for drinking water. It covers organoleptic and physical parameters, general parameters concerning substances undesirable in excessive amounts, parameters concerning toxic substances, and bacteriological, virological, biological and radioactive parameters. For each parameter it specifies an acceptable limit and a permissible limit in the absence of an alternate source. It is the reference specification for drinking water quality in India."
+      }
+    ]
+  },
+  {
+    "title": "IS 14543 - Packaged Drinking Water (other than packaged natural mineral water)",
+    "source_url": "https://www.bis.gov.in/product-certification/products-under-compulsory-certification/",
+    "doc_type": "standard",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Scope and certification status",
+        "content": "IS 14543 'Packaged Drinking Water (Other than Packaged Natural Mineral Water) - Specification' covers water that has been treated and packaged for human consumption. Packaged drinking water is under compulsory BIS certification: a manufacturer requires a BIS licence to use the Standard Mark before manufacturing or selling it. Packaged drinking water manufacturers additionally require an FSSAI licence, which is a separate approval from a different regulator and does not substitute for the BIS licence."
+      }
+    ]
+  },
+  {
+    "title": "IS 13428 - Packaged Natural Mineral Water",
+    "source_url": "https://www.bis.gov.in/product-certification/products-under-compulsory-certification/",
+    "doc_type": "standard",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Scope",
+        "content": "IS 13428 'Packaged Natural Mineral Water - Specification' applies to water obtained directly from natural or drilled sources from underground water-bearing strata, packaged close to the source, which has not undergone treatment that alters its original mineral composition. It is distinct from IS 14543, which covers treated packaged drinking water. Packaged natural mineral water is also under compulsory BIS certification."
+      }
+    ]
+  },
+  {
+    "title": "IS 16102 - Self-ballasted LED lamps for general lighting services",
+    "source_url": "https://www.bis.gov.in/product-certification/compulsory-registration-scheme/",
+    "doc_type": "standard",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Parts, scope and certification route",
+        "content": "IS 16102 covers self-ballasted LED lamps for general lighting services operating at supply voltages above 50 V. Part 1 specifies safety requirements and Part 2 specifies performance requirements. Self-ballasted LED lamps are notified under the Electronics and Information Technology Goods (Requirements for Compulsory Registration) Order, so they are certified through the Compulsory Registration Scheme (CRS) rather than through an ISI mark licence under Scheme I. The registration is obtained against the safety standard, IS 16102 (Part 1)."
+      }
+    ]
+  },
+  {
+    "title": "IS 302 (Part 1) - Safety of household and similar electrical appliances",
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/standard_review/Indian_Standards",
+    "doc_type": "standard",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Scope",
+        "content": "IS 302 (Part 1) 'Safety of Household and Similar Electrical Appliances - Part 1: General Requirements' specifies the general safety requirements for electrical appliances for household and similar purposes, with rated voltage not exceeding 250 V for single-phase appliances and 480 V for other appliances. Specific appliance types are covered by corresponding Part 2 sections, which are read together with Part 1. The Part 2 section for the particular appliance is what a manufacturer certifies against."
+      }
+    ]
+  },
+  {
+    "title": "Stainless steel utensils and containers - identifying the right standard",
+    "source_url": "https://www.bis.gov.in/standards/technical-department/",
+    "doc_type": "guidance",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "How to narrow down the applicable standard",
+        "content": "For a stainless steel article intended to hold food or drink, the applicable Indian Standard depends on the article type (utensil, container, vacuum flask, bottle), the grade of stainless steel used, and the intended use. Because the correct standard turns on the specific article and steel grade, confirm the exact IS number against the BIS Standards catalogue for that product category before applying for a licence. Applying under the wrong standard is a common cause of rejected applications, so this is worth resolving before any fee is paid."
+      }
+    ]
+  },
+  {
+    "title": "Applying to BIS - the online portal",
+    "source_url": "https://www.manakonline.in/",
+    "doc_type": "process",
+    "verified": false,
+    "chunks": [
+      {
+        "heading": "Where applications are filed",
+        "content": "BIS applications are filed online. Manak Online is the BIS portal used for product certification applications, hallmarking registration and related services. Paper application forms have largely been replaced by online forms within the portal, so the practical step for an applicant is to register on the portal, select the relevant scheme, and complete the online application for that scheme, rather than to download a numbered paper form."
+      },
+      {
+        "heading": "Documents typically required",
+        "content": "An application for a product certification licence generally requires: proof of establishment of the firm, the factory address and layout, a list of manufacturing machinery, a list of in-house testing equipment mapped against the test requirements of the Indian Standard, details of the technical personnel responsible for quality, the process flow chart, and the applicable fees. The exact list depends on the scheme and the product; the portal shows the checklist for the selected scheme."
+      }
+    ]
+  },
+  {
+    "title": "Scope boundary - what this assistant does not cover",
+    "source_url": "https://www.bis.gov.in/",
+    "doc_type": "guidance",
+    "verified": true,
+    "chunks": [
+      {
+        "heading": "Not legal advice",
+        "content": "This assistant explains BIS standards, schemes and processes from published BIS sources. It does not provide legal advice, does not confirm the current legal status of any Quality Control Order, and cannot confirm whether a specific product is currently under compulsory certification. Fees, timelines and the list of covered products change by notification. Confirm anything you are going to act on against the official BIS source linked in the citation, or with a BIS regional office."
+      }
+    ]
+  }
+]

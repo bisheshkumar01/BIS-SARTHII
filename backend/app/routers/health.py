@@ -24,7 +24,7 @@ def health(db: Session = Depends(get_db)) -> dict:
         "status": "ok" if db_ok else "degraded",
         "database": db_ok,
         "llm_provider": settings.llm_provider,
-        "llm_key_configured": bool(settings.gemini_api_key),
+        "llm_key_configured": settings.has_llm_key,
         "mock_llm": settings.mock_llm,
         "faiss_index_built": len(index_files) > 0,
     }

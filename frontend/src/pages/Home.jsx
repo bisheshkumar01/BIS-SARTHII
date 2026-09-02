@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import InteractiveHoverButton from '../components/ui/InteractiveHoverButton.jsx'
 import {
   ScanLine,
   MessageCircleQuestion,
@@ -54,17 +55,26 @@ export default function Home() {
     <div>
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-900">
-        <div className="bg-grid absolute inset-0 opacity-40" />
+        {/* Order matters: mesh (colour) → sheen (light) → grid (texture) → content. */}
+        <div className="mesh-gradient" aria-hidden="true" />
+        <div className="mesh-sheen" aria-hidden="true" />
+        <div className="bg-grid absolute inset-0 opacity-30" aria-hidden="true" />
+        {/* Darkened toward the centre so the headline keeps its contrast ratio wherever
+            the blobs happen to drift. */}
         <div
-          className="absolute -top-24 right-[-10%] h-96 w-96 rounded-full opacity-20 blur-3xl"
-          style={{ background: 'var(--color-saffron-500)' }}
+          className="absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 45%, rgba(10,17,40,0.55) 0%, rgba(10,17,40,0.25) 55%, transparent 80%)',
+          }}
         />
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pt-28">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-saffron-400">
+            <span className="eyebrow inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-saffron-400">
               Smart India Hackathon 2026 · SIH26107 · Team THE BEES
             </span>
-            <h1 className="font-display mt-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
+            <h1 className="font-display mt-6 text-5xl font-extrabold leading-[1.05] text-white sm:text-6xl md:text-7xl">
               Your AI-powered guide to
               <span className="text-saffron-400"> BIS compliance</span>
             </h1>
@@ -75,17 +85,14 @@ export default function Home() {
             </p>
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                to="/chat"
-                className="inline-flex items-center gap-2 rounded-full bg-saffron-500 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-saffron-500/20 transition hover:bg-saffron-600"
-              >
-                Ask Sarthi <ArrowRight className="h-4 w-4" />
+              <Link to="/chat" tabIndex={-1}>
+                <InteractiveHoverButton text="Ask Sarthi" variant="solid" />
               </Link>
               <Link
                 to="/scan"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/10"
+                className="press inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-base font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
               >
-                <ScanLine className="h-4 w-4" /> Scan a Product
+                <ScanLine className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" /> Scan a Product
               </Link>
             </div>
 
@@ -109,17 +116,21 @@ export default function Home() {
           stacking context this section paints *under* it and the cards get clipped. */}
       <section className="relative z-10 mx-auto -mt-12 max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {actions.map((a) => (
+          {actions.map((a, i) => (
             <Link
               key={a.to}
               to={a.to}
-              className="card card-hover group flex flex-col gap-3 p-5"
+              style={{ '--delay': `${i * 70}ms` }}
+              className="card card-hover animate-rise group flex flex-col gap-3 p-5"
             >
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-navy-900/5 text-navy-800 group-hover:bg-saffron-100 group-hover:text-saffron-600">
+              <span className="icon-tile inline-flex h-11 w-11 items-center justify-center rounded-xl bg-navy-900/5 text-navy-800 group-hover:bg-saffron-100 group-hover:text-saffron-600">
                 <a.icon className="h-5 w-5" />
               </span>
               <div>
-                <p className="font-display text-sm font-bold text-navy-900">{a.label}</p>
+                <p className="font-display flex items-center gap-1 text-sm font-bold text-navy-900">
+                  {a.label}
+                  <ArrowRight className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                </p>
                 <p className="mt-1 text-xs leading-relaxed text-navy-700/65">{a.desc}</p>
               </div>
             </Link>
@@ -130,8 +141,8 @@ export default function Home() {
       {/* HOW IT WORKS */}
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-saffron-600">How it works</span>
-          <h2 className="font-display mt-3 text-3xl font-extrabold text-navy-900 sm:text-4xl">
+          <span className="eyebrow text-saffron-600">How it works</span>
+          <h2 className="font-display mt-3 text-3xl font-extrabold text-navy-900 sm:text-[2.6rem] sm:leading-[1.1]">
             From a vague product to an actionable compliance path
           </h2>
         </div>
@@ -139,7 +150,7 @@ export default function Home() {
           {steps.map((s, i) => (
             <div key={s.n} className="relative">
               <div className="flex items-center gap-3">
-                <span className="font-display text-3xl font-extrabold text-navy-900/10">{s.n}</span>
+                <span className="font-display text-5xl font-black tabular-nums text-navy-900/[0.09]">{s.n}</span>
                 {i < steps.length - 1 && (
                   <span className="hidden h-px flex-1 bg-navy-900/10 md:block" />
                 )}
@@ -155,15 +166,18 @@ export default function Home() {
       <section className="bg-navy-950 py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-saffron-400">Why not just ask a chatbot?</span>
-            <h2 className="font-display mt-3 text-3xl font-extrabold text-white sm:text-4xl">
+            <span className="eyebrow text-saffron-400">Why not just ask a chatbot?</span>
+            <h2 className="font-display mt-3 text-3xl font-extrabold text-white sm:text-[2.6rem] sm:leading-[1.1]">
               Not a generic AI. A compliance navigator.
             </h2>
           </div>
           <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {diffs.map((d) => (
-              <div key={d.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                <d.icon className="h-6 w-6 text-saffron-400" />
+              <div
+                key={d.title}
+                className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-300 hover:border-saffron-400/40 hover:bg-white/[0.06]"
+              >
+                <d.icon className="icon-tile h-6 w-6 text-saffron-400" />
                 <h3 className="font-display mt-4 text-base font-bold text-white">{d.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">{d.desc}</p>
               </div>
@@ -176,8 +190,8 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-saffron-600">Trust, by design</span>
-            <h2 className="font-display mt-3 text-3xl font-extrabold text-navy-900 sm:text-4xl">
+            <span className="eyebrow text-saffron-600">Trust, by design</span>
+            <h2 className="font-display mt-3 text-3xl font-extrabold text-navy-900 sm:text-[2.6rem] sm:leading-[1.1]">
               If we can't verify it, we say so.
             </h2>
             <p className="mt-4 max-w-lg text-base leading-relaxed text-navy-700/70">
@@ -238,7 +252,7 @@ export default function Home() {
             {users.map((u) => (
               <div
                 key={u.label}
-                className="inline-flex items-center gap-2.5 rounded-full border border-navy-900/10 bg-paper-50 px-5 py-2.5"
+                className="press inline-flex items-center gap-2.5 rounded-full border border-navy-900/10 bg-paper-50 px-5 py-2.5 transition-colors hover:border-saffron-400 hover:bg-white"
               >
                 <u.icon className="h-4 w-4 text-navy-700" />
                 <span className="text-sm font-semibold text-navy-800">{u.label}</span>
@@ -256,7 +270,7 @@ export default function Home() {
             style={{ background: 'var(--color-saffron-500)' }}
           />
           <div className="relative">
-            <h2 className="font-display text-3xl font-extrabold text-white sm:text-4xl">
+            <h2 className="font-display text-3xl font-extrabold text-white sm:text-[2.6rem] sm:leading-[1.1]">
               Ready to find your standard?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-white/65">
@@ -265,13 +279,13 @@ export default function Home() {
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 to="/chat"
-                className="rounded-full bg-saffron-500 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-saffron-600"
+                className="press shine rounded-full bg-saffron-500 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-saffron-600"
               >
                 Ask Sarthi
               </Link>
               <Link
                 to="/roadmap"
-                className="rounded-full border border-white/20 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/10"
+                className="press rounded-full border border-white/20 px-7 py-3.5 text-base font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
               >
                 Start Compliance Roadmap
               </Link>
