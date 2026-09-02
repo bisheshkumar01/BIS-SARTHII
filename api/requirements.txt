@@ -1,0 +1,20 @@
+# Dependencies for the Vercel serverless function ONLY.
+#
+# Vercel caps an unzipped function at 250 MB. The root requirements.txt pulls faiss-cpu,
+# sentence-transformers (and torch behind it), easyocr and opencv, which blow past that by an
+# order of magnitude — so the deployed function deliberately gets the chat path only.
+#
+# This is why retrieval is BM25 in pure Python: it has no wheel to ship. Moving to embeddings
+# means moving retrieval off the function (a hosted vector DB) rather than fattening this file.
+
+fastapi==0.115.6
+pydantic==2.10.4
+pydantic-settings==2.7.0
+python-multipart==0.0.20
+slowapi==0.1.9
+sqlalchemy==2.0.36
+google-genai>=1.20,<3
+python-dotenv==1.0.1
+
+# Postgres driver, for pointing DATABASE_URL at Supabase. Pure-Python, so no build step.
+pg8000==1.31.2

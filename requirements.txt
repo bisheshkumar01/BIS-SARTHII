@@ -1,3 +1,15 @@
+# Runtime dependencies for the API and the chat path.
+#
+# Kept deliberately slim: Vercel's Python builder installs from the requirements.txt it finds,
+# and its unzipped function limit is 250 MB. The vision/RAG stack (torch, faiss, easyocr,
+# opencv) is an order of magnitude past that, so it lives in requirements-ml.txt and is
+# installed only for local work — never shipped to the function.
+#
+# Python 3.11 or 3.12. Not 3.14: pydantic-core has no cp314 wheel, so pip falls back to
+# building it from Rust source and fails.
+#   py -3.11 -m venv .venv
+#   .venv/Scripts/pip install -r requirements.txt
+
 # --- Web framework ---
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
@@ -8,31 +20,16 @@ slowapi==0.1.9
 
 # --- Database ---
 sqlalchemy==2.0.36
+# Pure-Python Postgres driver, for pointing DATABASE_URL at Supabase. psycopg2 needs a build
+# step the serverless runtime does not have.
+pg8000==1.31.2
 
 # --- LLM ---
-google-genai==0.3.0
-
-# --- RAG ---
-langchain==0.3.13
-langchain-community==0.3.13
-faiss-cpu==1.9.0.post1
-sentence-transformers==3.3.1
-rank-bm25==0.2.2
-
-# --- Document ingestion ---
-pymupdf==1.25.1
-beautifulsoup4==4.12.3
-requests==2.32.3
-lxml==5.3.0
-
-# --- Vision / OCR ---
-opencv-python-headless==4.10.0.84
-easyocr==1.7.2
-pillow==11.0.0
+# 0.3.x predates the gemini-3.x models; 1.x is the first SDK line that serves them.
+google-genai>=1.20,<3
 
 # --- Utilities ---
 python-dotenv==1.0.1
-langdetect==1.0.9
 
 # --- Testing ---
 pytest==8.3.4

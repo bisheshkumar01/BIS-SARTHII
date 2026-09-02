@@ -8,11 +8,14 @@ import logging
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
 from app.config import settings
 from app.db.session import Base, engine
 from app.models import entities  # noqa: F401  — registers tables on Base
-from app.routers import health
+from app.routers import chat, health
+from app.services.rate_limit import limiter
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s | %(message)s"
@@ -24,6 +27,21 @@ app = FastAPI(
     version="0.1.0",
 )
 
+app.state.limiter = limiter
+app.add_middleware(SlowAPIMiddleware)
+
+
+@app.exception_handler(RateLimitExceeded)
+def on_rate_limit(request, exc):
+    """Answer in the response shape the chat UI already renders, so it needs no special case."""
+    from fastapi.responses import JSONResponse
+
+    return JSONResponse(
+        status_code=429,
+        content={"detail": "Too many questions in a short time. Wait a minute and try again."},
+    )
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origin_list,
@@ -33,12 +51,35 @@ app.add_middleware(
 )
 
 app.include_router(health.router, prefix="/api", tags=["health"])
+app.include_router(chat.router, prefix="/api", tags=["chat"])
 
 
 @app.on_event("startup")
 def on_startup() -> None:
-    """Create tables and required directories. Alembic is overkill for a one-week MVP."""
+    """Create tables, ensure the corpus exists, and make the writable dirs.
+
+    Alembic is overkill for a one-week MVP. The seeding step matters on serverless: /tmp is
+    wiped between cold starts, so without it a fresh instance would answer every question
+    with "no source found".
+    """
+    log = logging.getLogger(__name__)
+
     Base.metadata.create_all(bind=engine)
-    settings.upload_dir.mkdir(parents=True, exist_ok=True)
-    settings.faiss_index_path.mkdir(parents=True, exist_ok=True)
-    logging.getLogger(__name__).info("BIS SARTHI API ready")
+
+    # Read-only deployment filesystem: only the /tmp redirect is creatable.
+    for path in (settings.writable_upload_dir, settings.faiss_index_path):
+        try:
+            path.mkdir(parents=True, exist_ok=True)
+        except OSError:
+            log.warning("Could not create %s (read-only filesystem) — continuing", path)
+
+    from app.db.session import SessionLocal
+    from app.services.seed import ensure_seeded
+
+    db = SessionLocal()
+    try:
+        ensure_seeded(db)
+    finally:
+        db.close()
+
+    log.info("BIS SARTHI API ready (serverless=%s)", settings.is_serverless)

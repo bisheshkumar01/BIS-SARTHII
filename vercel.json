@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "installCommand": "echo 'skipped: the frontend installs inside buildCommand, the function installs from api/requirements.txt'",
+  "buildCommand": "npm --prefix frontend ci && npm --prefix frontend run build",
+  "outputDirectory": "frontend/dist",
+
+  "functions": {
+    "api/index.py": {
+      "memory": 1024,
+      "maxDuration": 30,
+      "includeFiles": "{backend/**,data/seed/**}"
+    }
+  },
+
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}

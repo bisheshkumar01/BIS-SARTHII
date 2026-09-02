@@ -1,0 +1,24 @@
+# Keep the deployment upload small and free of local state.
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# The heavy stack must never reach the function's install step.
+requirements-ml.txt
+
+# Local database and scratch data; the function seeds itself from data/seed.
+*.db
+*.sqlite3
+data/raw/
+data/processed/
+data/index/
+data/uploads/
+
+frontend/node_modules/
+frontend/dist/
+
+tests/
+docs/
+.github/
