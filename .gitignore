@@ -37,11 +37,3 @@ models/
 Thumbs.db
 .vscode/
 .idea/
-
-# Local tool config
-.claude/
-
-
-
-
-graphify-out/
