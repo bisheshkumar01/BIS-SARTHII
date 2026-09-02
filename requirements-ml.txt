@@ -1,0 +1,29 @@
+# The vision / RAG stack. Install ON TOP of requirements.txt, for local work only.
+#
+#   .venv/Scripts/pip install -r requirements.txt -r requirements-ml.txt
+#
+# Deliberately NOT in requirements.txt: torch (pulled in by sentence-transformers) alone is
+# ~800 MB, and Vercel caps an unzipped serverless function at 250 MB. Nothing here can ship to
+# the deployed function — retrieval is BM25 in pure Python for exactly that reason. Moving to
+# embeddings means moving retrieval off the function (a hosted vector DB), not adding these.
+
+# --- RAG ---
+langchain==0.3.13
+langchain-community==0.3.13
+faiss-cpu==1.9.0.post1
+sentence-transformers==3.3.1
+rank-bm25==0.2.2
+
+# --- Document ingestion ---
+pymupdf==1.25.1
+beautifulsoup4==4.12.3
+requests==2.32.3
+lxml==5.3.0
+
+# --- Vision / OCR ---
+opencv-python-headless==4.10.0.84
+easyocr==1.7.2
+pillow==11.0.0
+
+# --- Language detection ---
+langdetect==1.0.9
