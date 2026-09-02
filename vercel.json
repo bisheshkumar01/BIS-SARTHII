@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
 
   "installCommand": "echo 'skipped: the frontend installs inside buildCommand, the function installs from api/requirements.txt'",
-  "buildCommand": "npm --prefix frontend ci && npm --prefix frontend run build",
+  "buildCommand": "cd frontend && npm ci && npm run build",
   "outputDirectory": "frontend/dist",
 
   "functions": {
