@@ -30,9 +30,11 @@ data/uploads/
 *.db
 *.sqlite3
 
-# ML model cache
+# ML model cache. The leading slash anchors this to the repo root: without it the pattern
+# also matched backend/app/models/, which silently kept the SQLAlchemy models out of every
+# commit and crashed the deployed function on an import it could not resolve.
 .cache/
-models/
+/models/
 
 # OS / editor
 .DS_Store
