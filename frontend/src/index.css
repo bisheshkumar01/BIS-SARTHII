@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+/* Local display face for the header — not part of the site-wide Playfair Display /
+   Public Sans system, scoped to the <header> element: wordmark, nav links, toggle.
+   Two weights under one family name, so font-weight: 700/400 in the components below
+   picks the matching file automatically instead of the browser faking a bold. */
+@font-face {
+  font-family: "Claire Hand";
+  src: url("./assets/fonts/ClaireHand-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Claire Hand";
+  src: url("./assets/fonts/ClaireHand-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /*
   BIS SARTHI design tokens.
   Navy = authority/trust (echoes BIS's own institutional identity).

@@ -1,4 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
+import PillNav from './PillNav.jsx'
 
 const links = [
   { to: '/chat', label: 'Ask Sarthi' },
@@ -8,42 +10,65 @@ const links = [
   { to: '/roadmap', label: 'Roadmap' },
 ]
 
+// Past this many pixels of scroll, the bar detaches from the top edge and floats.
+const SCROLL_THRESHOLD = 24
+
 export default function Navbar() {
+  const { pathname } = useLocation()
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD)
+    onScroll() // in case the page loads already scrolled (e.g. a deep link with a hash)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-40 border-b border-navy-800/10 bg-paper-50/85 backdrop-blur-md">
-      {/* Three columns so the nav can sit at true center regardless of how wide the
-          wordmark or the toggle are — a flex justify-between would center the nav only
-          when its neighbours happened to match in width. */}
-      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6">
-        <NavLink to="/" className="font-display justify-self-start text-lg font-extrabold tracking-tight text-navy-900">
-          BIS SARTHI
-        </NavLink>
+    // The outer element stays flush at the very top always — it's the inner bar below
+    // that visually shrinks and floats, via a top margin that opens a gap above it once
+    // scrolled. Splitting them this way means the floating state can have its own margin
+    // without the sticky positioning itself having to move.
+    <header className="sticky top-0 z-40" style={{ fontFamily: '"Claire Hand", var(--font-display)' }}>
+      <div
+        className={`mx-auto transition-all duration-300 ease-out ${
+          scrolled
+            ? 'mt-3 max-w-5xl rounded-full border border-navy-800/10 bg-paper-50/90 shadow-lg shadow-navy-900/10 backdrop-blur-md'
+            : 'mt-0 max-w-7xl rounded-none border-b border-navy-800/10 bg-paper-50/85 backdrop-blur-md'
+        }`}
+      >
+        {/* Three columns so the nav can sit at true center regardless of how wide the
+            wordmark or the toggle are — a flex justify-between would center the nav only
+            when its neighbours happened to match in width. */}
+        <div className="grid h-16 grid-cols-[1fr_auto_1fr] items-center px-6">
+          <NavLink to="/" className="justify-self-start text-2xl font-bold tracking-tight text-navy-900">
+            BIS SARTHI
+          </NavLink>
 
-        <nav className="hidden items-center gap-1 justify-self-center md:flex">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                `rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-navy-900 text-white'
-                    : 'link-underline text-navy-700 hover:bg-navy-900/5'
-                }`
-              }
-            >
-              {l.label}
-            </NavLink>
-          ))}
-        </nav>
+          {/* PillNav owns pills + its own mobile hamburger/popover; no logo prop, since the
+              wordmark above already fills that role and a second one would duplicate it.
+              Colors are a placeholder (navy fill on hover, transparent idle) — flagged for
+              the wider palette pass still to come. */}
+          <div className="justify-self-center">
+            <PillNav
+              items={links.map(l => ({ label: l.label, href: l.to }))}
+              activeHref={pathname}
+              ease="power2.easeOut"
+              baseColor="var(--color-navy-900)"
+              pillColor="transparent"
+              pillTextColor="var(--color-navy-700)"
+              hoveredPillTextColor="#ffffff"
+            />
+          </div>
 
-        <button
-          type="button"
-          className="press justify-self-end rounded-full border border-navy-800/15 px-3 py-1.5 text-sm font-semibold text-navy-800 hover:bg-navy-900/5"
-          title="Switch language"
-        >
-          EN / हिं
-        </button>
+          <button
+            type="button"
+            className="press justify-self-end rounded-full border border-navy-800/15 px-3 py-1.5 text-base font-normal text-navy-800 hover:bg-navy-900/5"
+            title="Switch language"
+          >
+            EN / हिं
+          </button>
+        </div>
       </div>
     </header>
   )
