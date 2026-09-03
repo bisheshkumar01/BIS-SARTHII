@@ -36,8 +36,9 @@ data/uploads/
 .cache/
 /models/
 
-# OS / editor
+# OS / editor / local tool config — machine-specific, never shared
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+.claude/
