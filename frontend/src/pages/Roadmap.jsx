@@ -38,7 +38,7 @@ export default function Roadmap() {
             </div>
             <div className={`flex-1 pb-8 ${s.status === 'pending' ? 'opacity-50' : ''}`}>
               <div className="flex items-center justify-between">
-                <p className="font-display text-sm font-bold text-navy-900">{s.title}</p>
+                <p className="text-sm font-semibold text-navy-900">{s.title}</p>
                 {s.status === 'current' && (
                   <span className="rounded-full bg-saffron-100 px-2.5 py-0.5 text-[10px] font-bold text-saffron-600">
                     IN PROGRESS

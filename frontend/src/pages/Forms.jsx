@@ -33,7 +33,7 @@ export default function Forms() {
             </span>
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <p className="font-display text-sm font-bold text-navy-900">{f.code} — {f.name}</p>
+                <p className="text-sm font-semibold text-navy-900">{f.code} — {f.name}</p>
                 <span className="rounded-full bg-saffron-100 px-2 py-0.5 text-[10px] font-bold text-saffron-600">
                   {f.scheme}
                 </span>

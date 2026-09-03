@@ -8,11 +8,20 @@
   so it stays meaningful instead of decorative.
 */
 @theme {
-  /* Work Sans for reading: clean, modern, high legibility at small sizes.
-     Jost for display: a geometric grotesque in the Futura lineage — perfect circles,
-     single-storey 'a', very high contrast between headline and body voice. */
-  --font-sans: "Work Sans", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Jost", "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
+  /* Two families, and the contrast between them is the system.
+
+     Playfair Display carries display type: high-contrast, editorial, enough personality to
+     make a headline an identity rather than a size.
+
+     Public Sans carries everything functional. It was drawn for the US Web Design System —
+     government forms, legal text, dense interfaces — which is exactly the register a
+     compliance tool needs, and it disappears when read rather than performing.
+
+     Hindi falls through to Noto Sans Devanagari per-glyph; neither Latin face covers it. */
+  --font-display: "Playfair Display", "Noto Sans Devanagari", Georgia, serif;
+  --font-body: "Public Sans", "Noto Sans Devanagari", system-ui, sans-serif;
+  /* Tailwind builds its font-sans utility from this token, so body and sans stay one thing. */
+  --font-sans: var(--font-body);
 
   --color-navy-950: #060b18;
   --color-navy-900: #0a1128;
@@ -53,35 +62,45 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Geometric faces are drawn on a wide default sidebearing, which reads as loose at
-   display sizes. Pulling the tracking in is what makes Jost look like the reference
-   Futura setting rather than like a wide default. */
+/* Display type. Playfair is drawn with generous sidebearings and thin hairlines; tightening
+   it closes the counters and the contrast stops reading, so tracking stays near neutral and
+   only comes in slightly at the largest sizes. */
 .font-display {
   font-family: var(--font-display);
+  letter-spacing: -0.005em;
+}
+
+/* h1 and h2 are display by default, so a heading is Playfair whether or not the markup
+   remembered the class. */
+h1,
+h2 {
+  font-family: var(--font-display);
+}
+
+/* Hero. clamp() scales continuously between phone and desktop instead of jumping at two
+   breakpoints; the max matches the previous md:text-7xl so the desktop composition is
+   unchanged. The floor is set by the longest unbreakable word in the headline —
+   "certification." — which has to fit inside 272px of content width on a 320px phone. */
+h1.font-display,
+.display-xl {
+  font-size: clamp(2rem, 1.2rem + 4.2vw, 4.5rem);
+  line-height: 1.06;
   letter-spacing: -0.02em;
 }
 
-/* Big headlines get tighter still, and the optical weight bumped to 800/900 —
-   geometric sans are drawn light and need the extra mass to carry a hero. */
-h1.font-display,
-.display-xl {
-  letter-spacing: -0.035em;
-  font-weight: 800;
-}
-
-/* The eyebrow labels above each section: small, wide, uppercase — the counterweight
-   that lets the headline read as large without shouting. */
+/* Eyebrow labels are interface, not editorial — Public Sans, per the system. Wide tracking
+   and small size make them the counterweight that lets a headline read large without
+   shouting. */
 .eyebrow {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   font-size: 0.6875rem;
 }
 
-/* Devanagari has no geometric-sans equivalent; Jost has no Devanagari coverage at all,
-   so Hindi headings fall through to Noto and would otherwise inherit Latin tracking
-   that crowds the matras. */
+/* Playfair Display has no Devanagari coverage, so Hindi headings fall through to Noto and would
+   otherwise inherit Latin tracking that crowds the matras. */
 :lang(hi) .font-display,
 .font-display:lang(hi) {
   letter-spacing: 0;

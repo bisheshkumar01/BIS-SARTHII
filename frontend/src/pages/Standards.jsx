@@ -7,6 +7,8 @@ const matches = [
     score: 92,
     scheme: 'Mandatory · ISI Mark',
     why: ['Product category matches "packaged water"', 'Intended use: human consumption'],
+
+    
   },
   {
     isNumber: 'IS 13428 : 2005',
@@ -44,11 +46,11 @@ export default function Standards() {
           <div key={m.isNumber} className="card p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="font-display text-base font-bold text-navy-900">{m.isNumber}</p>
+                <p className="text-base font-semibold text-navy-900">{m.isNumber}</p>
                 <p className="mt-0.5 text-sm text-navy-700/70">{m.title}</p>
               </div>
               <div className="flex shrink-0 flex-col items-end">
-                <span className="font-display text-lg font-extrabold text-saffron-600">{m.score}%</span>
+                <span className="text-lg font-bold tabular-nums text-saffron-600">{m.score}%</span>
                 <span className="text-[10px] uppercase tracking-wide text-navy-700/40">match</span>
               </div>
             </div>

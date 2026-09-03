@@ -71,17 +71,14 @@ export default function Home() {
         />
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pt-28">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="eyebrow inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-saffron-400">
-              Smart India Hackathon 2026 · SIH26107 · Team THE BEES
-            </span>
-            <h1 className="font-display mt-6 text-5xl font-extrabold leading-[1.05] text-white sm:text-6xl md:text-7xl">
-              Your AI-powered guide to
-              <span className="text-saffron-400"> BIS compliance</span>
+            <h1 className="font-display font-extrabold text-white">
+              Stop guessing your way through
+              <span className="text-saffron-400"> BIS certification.</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/70">
-              Describe your product or scan its label — Sarthi finds the applicable Indian
-              Standard, explains certification, surfaces the right forms, and builds you a
-              step-by-step roadmap. Every answer backed by an official BIS source.
+              Most manufacturers discover what they needed after the application is
+              rejected. Sarthi maps the standard, the testing, and the forms before you
+              start.
             </p>
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -127,7 +124,7 @@ export default function Home() {
                 <a.icon className="h-5 w-5" />
               </span>
               <div>
-                <p className="font-display flex items-center gap-1 text-sm font-bold text-navy-900">
+                <p className="flex items-center gap-1 text-sm font-semibold text-navy-900">
                   {a.label}
                   <ArrowRight className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </p>
