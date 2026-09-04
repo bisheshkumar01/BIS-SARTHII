@@ -104,7 +104,7 @@ export default function Home() {
                 BorderGlow supplies its own background/border/radius/shadow, so those are
                 gone from the wrapper below — only layout and text alignment remain. Colors
                 are the site's own navy/saffron, not the component's purple/pink/blue
-                defaults; animated intro plays once on mount, then it's hover-only. */}
+                defaults. Hover-only, no mount-time sweep — that intro didn't read well. */}
             <BorderGlow
               className="mx-auto mt-12 max-w-xl text-left"
               backgroundColor="#060b18"
@@ -112,7 +112,6 @@ export default function Home() {
               glowColor="32 90 55"
               borderRadius={16}
               glowRadius={32}
-              animated
             >
               <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
