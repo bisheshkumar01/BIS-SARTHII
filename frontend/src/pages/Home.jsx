@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import InteractiveHoverButton from '../components/ui/InteractiveHoverButton.jsx'
 import BorderGlow from '../components/BorderGlow.jsx'
+import TiltCard from '../components/TiltCard.jsx'
 import {
   ScanLine,
   FileSearch,
@@ -25,8 +26,8 @@ const demoChats = [
     q: 'Do I need BIS certification for packaged drinking water?',
     a: (
       <>
-        Yes — it falls under <span className="font-semibold text-saffron-400">IS 14543</span>{' '}
-        and is under compulsory certification. An FSSAI licence is separately required.
+        Yes — it falls under <span className="font-semibold text-saffron-400">IS 14543</span> and is
+        under compulsory certification. An FSSAI licence is separately required.
       </>
     ),
     source: 'bis.gov.in — Products under Compulsory Certification',
@@ -46,8 +47,8 @@ const demoChats = [
     a: (
       <>
         Register on Manak Online, then file the{' '}
-        <span className="font-semibold text-saffron-400">Scheme I</span> application — one
-        product, one standard, one factory address.
+        <span className="font-semibold text-saffron-400">Scheme I</span> application — one product,
+        one standard, one factory address.
       </>
     ),
     source: 'manakonline.in — Application for grant of licence',
@@ -113,35 +114,38 @@ export default function Home() {
                 scroll past three mock windows to find out what the product is. */}
             <div className="order-2 space-y-6 lg:order-1">
               {demoChats.map((c, i) => (
-                <BorderGlow
-                  key={c.q}
-                  className={`max-w-2xl text-left ${CHAT_LAYOUT[i]}`}
-                  backgroundColor="#060b18"
-                  colors={['#f2900f', '#0a1128', '#f7a836']}
-                  glowColor="32 90 55"
-                  borderRadius={16}
-                  glowRadius={20}
-                >
-                  <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-                  </div>
-                  <div className="space-y-3.5 px-5 py-6">
-                    <div className="ml-auto max-w-[85%] rounded-xl rounded-tr-sm bg-white/10 px-4 py-2.5 text-sm text-white/90">
-                      {c.q}
+                /* Layout classes live on the tilt wrapper, since that is now the positioned
+                   element; BorderGlow just fills it. */
+                <TiltCard key={c.q} className={`max-w-2xl ${CHAT_LAYOUT[i]}`}>
+                  <BorderGlow
+                    className="text-left"
+                    backgroundColor="#060b18"
+                    colors={['#f2900f', '#0a1128', '#f7a836']}
+                    glowColor="32 90 55"
+                    borderRadius={16}
+                    glowRadius={20}
+                  >
+                    <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
                     </div>
-                    <div className="max-w-[92%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-3 text-sm leading-relaxed text-white/80">
-                      {c.a}
+                    <div className="space-y-3.5 px-5 py-6">
+                      <div className="ml-auto max-w-[85%] rounded-xl rounded-tr-sm bg-white/10 px-4 py-2.5 text-sm text-white/90">
+                        {c.q}
+                      </div>
+                      <div className="max-w-[92%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-3 text-sm leading-relaxed text-white/80">
+                        {c.a}
+                      </div>
                     </div>
-                  </div>
-                  {/* The source line is the product's whole promise made visible — and it
+                    {/* The source line is the product's whole promise made visible — and it
                       gives the card the extra height it needed without dead padding. */}
-                  <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3 text-xs text-white/40">
-                    <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-verified-500" />
-                    <span className="truncate">{c.source}</span>
-                  </div>
-                </BorderGlow>
+                    <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3 text-xs text-white/40">
+                      <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-verified-500" />
+                      <span className="truncate">{c.source}</span>
+                    </div>
+                  </BorderGlow>
+                </TiltCard>
               ))}
             </div>
 
@@ -153,9 +157,8 @@ export default function Home() {
                 <span className="text-saffron-400"> BIS certification.</span>
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-white/70">
-                Most manufacturers discover what they needed after the application is
-                rejected. Sarthi maps the standard, the testing, and the forms before you
-                start.
+                Most manufacturers discover what they needed after the application is rejected.
+                Sarthi maps the standard, the testing, and the forms before you start.
               </p>
 
               <div className="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
@@ -166,7 +169,8 @@ export default function Home() {
                   to="/scan"
                   className="press inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-base font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
                 >
-                  <ScanLine className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" /> Scan a Product
+                  <ScanLine className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" />{' '}
+                  Scan a Product
                 </Link>
               </div>
 
@@ -198,7 +202,9 @@ export default function Home() {
           {steps.map((s, i) => (
             <div key={s.n} className="relative">
               <div className="flex items-center gap-3">
-                <span className="font-display text-5xl font-bold tabular-nums text-navy-900/[0.09]">{s.n}</span>
+                <span className="font-display text-5xl font-bold tabular-nums text-navy-900/[0.09]">
+                  {s.n}
+                </span>
                 {i < steps.length - 1 && (
                   <span className="hidden h-px flex-1 bg-navy-900/10 md:block" />
                 )}
