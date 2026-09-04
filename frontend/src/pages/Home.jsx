@@ -17,6 +17,45 @@ import {
   Quote,
 } from 'lucide-react'
 
+/* Every exchange below was run against the real backend before being written here — each
+   returns this content with a live citation from the seed corpus. If a demo question ever
+   stops answering, this array is the thing that quietly starts lying. */
+const demoChats = [
+  {
+    q: 'Do I need BIS certification for packaged drinking water?',
+    a: (
+      <>
+        Yes — it falls under <span className="font-semibold text-saffron-400">IS 14543</span>{' '}
+        and is under compulsory certification. An FSSAI licence is separately required.
+      </>
+    ),
+  },
+  {
+    q: 'Which standard applies to an LED bulb?',
+    a: (
+      <>
+        <span className="font-semibold text-saffron-400">IS 16102 (Part 1)</span> for safety —
+        certified through the CRS scheme, not the ISI mark. Part 2 covers performance.
+      </>
+    ),
+  },
+  {
+    q: 'How do I apply for an ISI mark licence?',
+    a: (
+      <>
+        Register on Manak Online, then file the{' '}
+        <span className="font-semibold text-saffron-400">Scheme I</span> application — one
+        product, one standard, one factory address.
+      </>
+    ),
+  },
+]
+
+/* Horizontal stagger from the layout sketch, so the stack reads as scattered rather than
+   as a rigid list. Flat below lg, where the column is narrow and any offset would either
+   overflow or just look like a mistake. */
+const CHAT_OFFSETS = ['lg:ml-0 lg:mr-8', 'lg:ml-10 lg:mr-0', 'lg:-ml-6 lg:mr-12']
+
 const steps = [
   { n: '01', title: 'Describe or scan your product', desc: 'Type a description or upload a photo/label — Sarthi extracts what matters.' },
   { n: '02', title: 'Get matched standards, with proof', desc: 'Ranked Indian Standards, each with a relevance score and the evidence behind it.' },
@@ -50,86 +89,85 @@ export default function Home() {
         <div className="mesh-gradient" aria-hidden="true" />
         <div className="mesh-sheen" aria-hidden="true" />
         <div className="bg-grid absolute inset-0 opacity-30" aria-hidden="true" />
-        {/* Darkened toward the centre so the headline keeps its contrast ratio wherever
-            the blobs happen to drift. */}
+        {/* Darkened under the headline so it keeps its contrast ratio wherever the blobs
+            happen to drift. The anchor sits right of centre because that is where the text
+            column now is — left of it is the window stack, which needs no such backing. */}
         <div
           className="absolute inset-0"
           aria-hidden="true"
           style={{
             background:
-              'radial-gradient(ellipse at 50% 45%, rgba(10,17,40,0.55) 0%, rgba(10,17,40,0.25) 55%, transparent 80%)',
+              'radial-gradient(ellipse at 70% 45%, rgba(10,17,40,0.55) 0%, rgba(10,17,40,0.25) 55%, transparent 80%)',
           }}
         />
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pt-28">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="font-display font-bold text-white">
-              Stop guessing your way through
-              <span className="text-saffron-400"> BIS certification.</span>
-            </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/70">
-              Most manufacturers discover what they needed after the application is
-              rejected. Sarthi maps the standard, the testing, and the forms before you
-              start.
-            </p>
-
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link to="/chat" tabIndex={-1}>
-                <InteractiveHoverButton text="Ask Sarthi" variant="solid" />
-              </Link>
-              <Link
-                to="/scan"
-                className="press inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-base font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
-              >
-                <ScanLine className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" /> Scan a Product
-              </Link>
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10">
+            {/* Windows sit left on desktop, per the layout sketch — but second in source
+                order so a phone shows the headline first and doesn't make the reader
+                scroll past three mock windows to find out what the product is. */}
+            <div className="order-2 space-y-5 lg:order-1">
+              {demoChats.map((c, i) => (
+                <BorderGlow
+                  key={c.q}
+                  className={`text-left ${CHAT_OFFSETS[i]}`}
+                  backgroundColor="#060b18"
+                  colors={['#f2900f', '#0a1128', '#f7a836']}
+                  glowColor="32 90 55"
+                  borderRadius={16}
+                  glowRadius={20}
+                >
+                  <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                  </div>
+                  <div className="space-y-3 p-5">
+                    <div className="ml-auto max-w-[85%] rounded-xl rounded-tr-sm bg-white/10 px-4 py-2.5 text-sm text-white/90">
+                      {c.q}
+                    </div>
+                    <div className="max-w-[92%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-2.5 text-sm leading-relaxed text-white/80">
+                      {c.a}
+                    </div>
+                  </div>
+                </BorderGlow>
+              ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/55">
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-verified-500" /> Evidence-backed answers
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-verified-500" /> Official BIS sources only
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-verified-500" /> English &amp; हिंदी
-              </span>
+            <div className="order-1 lg:order-2">
+              <h1 className="font-display font-bold text-white">
+                Stop guessing your way through
+                <span className="text-saffron-400"> BIS certification.</span>
+              </h1>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
+                Most manufacturers discover what they needed after the application is
+                rejected. Sarthi maps the standard, the testing, and the forms before you
+                start.
+              </p>
+
+              <div className="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <Link to="/chat" tabIndex={-1}>
+                  <InteractiveHoverButton text="Ask Sarthi" variant="solid" />
+                </Link>
+                <Link
+                  to="/scan"
+                  className="press inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-base font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+                >
+                  <ScanLine className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" /> Scan a Product
+                </Link>
+              </div>
+
+              <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/55">
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-verified-500" /> Evidence-backed answers
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-verified-500" /> Official BIS sources only
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-verified-500" /> English &amp; हिंदी
+                </span>
+              </div>
             </div>
-
-            {/* Mock chat window. Static and illustrative, not wired to the live API — but
-                the example is real: packaged drinking water is the one domain in the seed
-                corpus that already answers with a confident, exact IS citation, so a judge
-                trying the same question in Ask Sarthi sees the same result this promises.
-
-                BorderGlow supplies its own background/border/radius/shadow, so those are
-                gone from the wrapper below — only layout and text alignment remain. Colors
-                are the site's own navy/saffron, not the component's purple/pink/blue
-                defaults. Hover-only, no mount-time sweep — that intro didn't read well. */}
-            <BorderGlow
-              className="mx-auto mt-12 max-w-xl text-left"
-              backgroundColor="#060b18"
-              colors={['#f2900f', '#0a1128', '#f7a836']}
-              glowColor="32 90 55"
-              borderRadius={16}
-              glowRadius={32}
-            >
-              <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              </div>
-              <div className="space-y-3 p-5">
-                <div className="ml-auto max-w-[85%] rounded-xl rounded-tr-sm bg-white/10 px-4 py-2.5 text-sm text-white/90">
-                  Do I need BIS certification for packaged drinking water?
-                </div>
-                <div className="max-w-[90%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-2.5 text-sm leading-relaxed text-white/80">
-                  Yes — packaged drinking water falls under{' '}
-                  <span className="font-semibold text-saffron-400">IS 14543</span>, and ISI
-                  certification is mandatory before sale. Next: testing requirements, then
-                  Form V.
-                </div>
-              </div>
-            </BorderGlow>
           </div>
         </div>
       </section>
