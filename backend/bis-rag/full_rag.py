@@ -7,19 +7,18 @@ from sklearn.metrics.pairwise import cosine_similarity
 from google import genai
 
 
-# ============================================================
+# =========================
 # CONFIG
-# ============================================================
+# =========================
 
 DB_FILE = "bis_vector_store.pkl"
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-3.6-flash"
 TOP_K = 3
-MAX_TOKENS = 700
 
 
-# ============================================================
-# LOAD .ENV
-# ============================================================
+# =========================
+# LOAD API KEY
+# =========================
 
 load_dotenv()
 
@@ -27,23 +26,23 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not GEMINI_API_KEY:
     print("ERROR: GEMINI_API_KEY not found.")
-    print("Create a .env file with:")
-    print("GEMINI_API_KEY=your_api_key_here")
+    print("Make sure your .env file contains:")
+    print("GEMINI_API_KEY=your_api_key")
     sys.exit(1)
 
 
-# ============================================================
+# =========================
 # GEMINI CLIENT
-# ============================================================
+# =========================
 
 client = genai.Client(
     api_key=GEMINI_API_KEY
 )
 
 
-# ============================================================
-# RETRIEVE RELEVANT DOCUMENTS
-# ============================================================
+# =========================
+# RETRIEVE DOCUMENTS
+# =========================
 
 def retrieve(question, store, top_k=TOP_K):
 
@@ -70,9 +69,9 @@ def retrieve(question, store, top_k=TOP_K):
     ]
 
 
-# ============================================================
+# =========================
 # BUILD PROMPT
-# ============================================================
+# =========================
 
 def build_prompt(question, chunks):
 
@@ -81,58 +80,51 @@ def build_prompt(question, chunks):
         for c in chunks
     )
 
-    return f"""
-You are BIS Sārthi, an AI assistant for BIS
-(Bureau of Indian Standards) certification and compliance.
+    prompt = f"""
+You are a helpful BIS (Bureau of Indian Standards) assistant.
 
-Answer ONLY using the BIS document context provided below.
+Answer the user's question ONLY using the information
+provided in the BIS document context below.
 
-Rules:
-- Do not guess.
-- Do not invent requirements.
-- Do not use outside information.
-- If the context does not contain the answer, say:
-  "The retrieved BIS documents do not contain enough information
-  to answer this confidently."
-- Use bullet points when listing documents.
-- Clearly mention conditions or exceptions if they appear
-  in the provided context.
+Do not guess.
+Do not invent requirements.
+Do not use outside information.
 
-================ BIS DOCUMENT CONTEXT ================
+If the answer is not present in the context, say:
+
+"The retrieved BIS documents do not contain enough information
+to answer this question."
+
+Use clear bullet points when appropriate.
+
+================ BIS DOCUMENTS ================
 
 {context}
 
-================ USER QUESTION ================
+================ QUESTION ================
 
 {question}
 
 ================ ANSWER ================
 """
 
+    return prompt
 
-# ============================================================
-# CALL GEMINI
-# ============================================================
+
+# =========================
+# ASK GEMINI
+# =========================
 
 def call_llm(prompt):
 
     try:
 
-        response = client.models.generate_content(
+        response = client.interactions.create(
             model=MODEL,
-            contents=prompt,
-            config={
-                "max_output_tokens": MAX_TOKENS,
-                "temperature": 0.2
-            }
+            input=prompt
         )
 
-        if not response.text:
-            raise RuntimeError(
-                "Gemini returned an empty response."
-            )
-
-        return response.text
+        return response.output_text
 
     except Exception as e:
 
@@ -142,17 +134,18 @@ def call_llm(prompt):
         raise
 
 
-# ============================================================
-# COMPLETE RAG PIPELINE
-# ============================================================
+# =========================
+# RAG PIPELINE
+# =========================
 
 def answer_question(question):
 
     if not os.path.exists(DB_FILE):
 
         raise FileNotFoundError(
-            f"Could not find {DB_FILE}. "
-            "Make sure it is in the same folder."
+            f"Could not find '{DB_FILE}'. "
+            "Make sure bis_vector_store.pkl is "
+            "in the same folder as this file."
         )
 
     print("\nLoading BIS vector database...")
@@ -193,9 +186,9 @@ def answer_question(question):
     return answer, chunks
 
 
-# ============================================================
+# =========================
 # MAIN
-# ============================================================
+# =========================
 
 if __name__ == "__main__":
 
@@ -211,11 +204,12 @@ if __name__ == "__main__":
     question = " ".join(sys.argv[1:])
 
     print("\n" + "=" * 60)
-    print("BIS SĀRTHI")
+    print("BIS SARTHI")
     print("AI-Powered BIS Compliance Assistant")
     print("=" * 60)
 
-    print("\nQuestion:", question)
+    print("\nQuestion:")
+    print(question)
 
     try:
 
@@ -242,10 +236,6 @@ if __name__ == "__main__":
                     "Unknown document"
                 )
             )
-
-    except KeyboardInterrupt:
-
-        print("\nStopped by user.")
 
     except Exception as e:
 
