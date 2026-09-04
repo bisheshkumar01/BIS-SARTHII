@@ -10,6 +10,12 @@ const links = [
   { to: '/roadmap', label: 'Roadmap' },
 ]
 
+// Built once at module scope, not inside the component: PillNav's items prop needs a
+// stable reference. A fresh .map() on every Navbar render (which happens on every route
+// change and every scroll-threshold toggle) was making PillNav think its item list had
+// changed, which reran its intro animation each time.
+const pillNavItems = links.map(l => ({ label: l.label, href: l.to }))
+
 // Past this many pixels of scroll, the bar detaches from the top edge and floats.
 const SCROLL_THRESHOLD = 24
 
@@ -51,7 +57,7 @@ export default function Navbar() {
               the wider palette pass still to come. */}
           <div className="justify-self-center">
             <PillNav
-              items={links.map(l => ({ label: l.label, href: l.to }))}
+              items={pillNavItems}
               activeHref={pathname}
               ease="power2.easeOut"
               baseColor="var(--color-navy-900)"

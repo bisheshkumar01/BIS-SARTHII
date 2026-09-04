@@ -37,6 +37,11 @@ const PillNav = ({
   const hamburgerRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const navItemsRef = useRef(null);
+  // Guards the intro tween below so it can only ever fire once. `items` is rebuilt by
+  // whatever renders this component, so its reference changes on every re-render (a
+  // route change, a scroll-driven state update, anything) — a plain effect dependency
+  // on `items` would replay the "page just loaded" animation on every one of those.
+  const hasPlayedIntroRef = useRef(false);
   const logoRef = useRef(null);
 
   useEffect(() => {
@@ -103,7 +108,8 @@ const PillNav = ({
       gsap.set(menu, { visibility: 'hidden', opacity: 0, scaleY: 1 });
     }
 
-    if (initialLoadAnimation) {
+    if (initialLoadAnimation && !hasPlayedIntroRef.current) {
+      hasPlayedIntroRef.current = true;
       const logoEl = logoRef.current;
       const navItems = navItemsRef.current;
 
