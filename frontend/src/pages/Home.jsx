@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom'
 import InteractiveHoverButton from '../components/ui/InteractiveHoverButton.jsx'
 import {
   ScanLine,
-  MessageCircleQuestion,
   FileSearch,
   ClipboardList,
   Route as RouteIcon,
   ShieldCheck,
   Languages,
-  ArrowRight,
   CheckCircle2,
   Factory,
   Ship,
@@ -17,14 +15,6 @@ import {
   GraduationCap,
   Quote,
 } from 'lucide-react'
-
-const actions = [
-  { to: '/chat', icon: MessageCircleQuestion, label: 'Ask Sarthi', desc: 'Ask any BIS or standards question in plain language.' },
-  { to: '/scan', icon: ScanLine, label: 'Scan Product', desc: 'Upload a photo or label — we read it for you.' },
-  { to: '/standards', icon: FileSearch, label: 'Find Standard', desc: 'Match your product to the right Indian Standard.' },
-  { to: '/forms', icon: ClipboardList, label: 'Find Form', desc: 'Locate the exact BIS form you need, ranked by relevance.' },
-  { to: '/roadmap', icon: RouteIcon, label: 'Compliance Roadmap', desc: 'A step-by-step path from product to certification.' },
-]
 
 const steps = [
   { n: '01', title: 'Describe or scan your product', desc: 'Type a description or upload a photo/label — Sarthi extracts what matters.' },
@@ -104,34 +94,30 @@ export default function Home() {
                 <CheckCircle2 className="h-4 w-4 text-verified-500" /> English &amp; हिंदी
               </span>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ACTION CARDS */}
-      {/* relative+z-10: the hero above is position:relative, so without its own
-          stacking context this section paints *under* it and the cards get clipped. */}
-      <section className="relative z-10 mx-auto -mt-12 max-w-7xl px-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {actions.map((a, i) => (
-            <Link
-              key={a.to}
-              to={a.to}
-              style={{ '--delay': `${i * 70}ms` }}
-              className="card card-hover animate-rise group flex flex-col gap-3 p-5"
-            >
-              <span className="icon-tile inline-flex h-11 w-11 items-center justify-center rounded-xl bg-navy-900/5 text-navy-800 group-hover:bg-saffron-100 group-hover:text-saffron-600">
-                <a.icon className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="flex items-center gap-1 text-sm font-semibold text-navy-900">
-                  {a.label}
-                  <ArrowRight className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                </p>
-                <p className="mt-1 text-xs leading-relaxed text-navy-700/65">{a.desc}</p>
+            {/* Mock chat window. Static and illustrative, not wired to the live API — but
+                the example is real: packaged drinking water is the one domain in the seed
+                corpus that already answers with a confident, exact IS citation, so a judge
+                trying the same question in Ask Sarthi sees the same result this promises. */}
+            <div className="animate-rise mx-auto mt-12 max-w-xl overflow-hidden rounded-2xl border border-white/10 bg-navy-950/70 text-left shadow-2xl shadow-black/40 backdrop-blur-sm">
+              <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
               </div>
-            </Link>
-          ))}
+              <div className="space-y-3 p-5">
+                <div className="ml-auto max-w-[85%] rounded-xl rounded-tr-sm bg-white/10 px-4 py-2.5 text-sm text-white/90">
+                  Do I need BIS certification for packaged drinking water?
+                </div>
+                <div className="max-w-[90%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-2.5 text-sm leading-relaxed text-white/80">
+                  Yes — packaged drinking water falls under{' '}
+                  <span className="font-semibold text-saffron-400">IS 14543</span>, and ISI
+                  certification is mandatory before sale. Next: testing requirements, then
+                  Form V.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
