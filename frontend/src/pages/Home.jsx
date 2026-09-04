@@ -29,6 +29,7 @@ const demoChats = [
         and is under compulsory certification. An FSSAI licence is separately required.
       </>
     ),
+    source: 'bis.gov.in — Products under Compulsory Certification',
   },
   {
     q: 'Which standard applies to an LED bulb?',
@@ -38,6 +39,7 @@ const demoChats = [
         certified through the CRS scheme, not the ISI mark. Part 2 covers performance.
       </>
     ),
+    source: 'bis.gov.in — Compulsory Registration Scheme',
   },
   {
     q: 'How do I apply for an ISI mark licence?',
@@ -48,13 +50,14 @@ const demoChats = [
         product, one standard, one factory address.
       </>
     ),
+    source: 'manakonline.in — Application for grant of licence',
   },
 ]
 
-/* Horizontal stagger from the layout sketch, so the stack reads as scattered rather than
-   as a rigid list. Flat below lg, where the column is narrow and any offset would either
-   overflow or just look like a mistake. */
-const CHAT_OFFSETS = ['lg:ml-0', 'lg:ml-12', 'lg:-ml-6']
+/* Horizontal stagger only — separate cards with clear air between them, no overlap. The
+   widths vary slightly so the stack has some rhythm rather than reading as three identical
+   boxes. Flat below lg, where any offset in a narrow column looks like a mistake. */
+const CHAT_LAYOUT = ['lg:ml-0 lg:w-full', 'lg:ml-32 lg:w-[95%]', 'lg:-ml-8 lg:w-[97%]']
 
 const steps = [
   { n: '01', title: 'Describe or scan your product', desc: 'Type a description or upload a photo/label — Sarthi extracts what matters.' },
@@ -108,11 +111,11 @@ export default function Home() {
             {/* Windows sit left on desktop, per the layout sketch — but second in source
                 order so a phone shows the headline first and doesn't make the reader
                 scroll past three mock windows to find out what the product is. */}
-            <div className="order-2 space-y-5 lg:order-1">
+            <div className="order-2 space-y-6 lg:order-1">
               {demoChats.map((c, i) => (
                 <BorderGlow
                   key={c.q}
-                  className={`max-w-xl text-left ${CHAT_OFFSETS[i]}`}
+                  className={`max-w-2xl text-left ${CHAT_LAYOUT[i]}`}
                   backgroundColor="#060b18"
                   colors={['#f2900f', '#0a1128', '#f7a836']}
                   glowColor="32 90 55"
@@ -124,13 +127,19 @@ export default function Home() {
                     <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
                     <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
                   </div>
-                  <div className="space-y-3 p-5">
+                  <div className="space-y-3.5 px-5 py-6">
                     <div className="ml-auto max-w-[85%] rounded-xl rounded-tr-sm bg-white/10 px-4 py-2.5 text-sm text-white/90">
                       {c.q}
                     </div>
-                    <div className="max-w-[92%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-2.5 text-sm leading-relaxed text-white/80">
+                    <div className="max-w-[92%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-3 text-sm leading-relaxed text-white/80">
                       {c.a}
                     </div>
+                  </div>
+                  {/* The source line is the product's whole promise made visible — and it
+                      gives the card the extra height it needed without dead padding. */}
+                  <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3 text-xs text-white/40">
+                    <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-verified-500" />
+                    <span className="truncate">{c.source}</span>
                   </div>
                 </BorderGlow>
               ))}
@@ -143,7 +152,7 @@ export default function Home() {
                 Stop guessing your way through
                 <span className="text-saffron-400"> BIS certification.</span>
               </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
+              <p className="mt-5 text-lg leading-relaxed text-white/70">
                 Most manufacturers discover what they needed after the application is
                 rejected. Sarthi maps the standard, the testing, and the forms before you
                 start.
