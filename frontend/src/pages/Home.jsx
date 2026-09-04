@@ -116,7 +116,7 @@ export default function Home() {
               {demoChats.map((c, i) => (
                 /* Layout classes live on the tilt wrapper, since that is now the positioned
                    element; BorderGlow just fills it. */
-                <TiltCard key={c.q} className={`max-w-2xl ${CHAT_LAYOUT[i]}`}>
+                <TiltCard key={c.q} max={16} className={`max-w-2xl ${CHAT_LAYOUT[i]}`}>
                   <BorderGlow
                     className="text-left"
                     backgroundColor="#060b18"
