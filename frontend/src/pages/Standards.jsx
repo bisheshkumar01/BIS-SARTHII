@@ -22,7 +22,7 @@ const matches = [
 export default function Standards() {
   return (
     <div className="mx-auto max-w-4xl px-6 py-14">
-      <h1 className="font-display text-3xl font-extrabold text-navy-900">Find your standard</h1>
+      <h1 className="font-display text-3xl font-bold text-navy-900">Find your standard</h1>
       <p className="mt-2 text-navy-700/65">
         Describe your product — material, use, and any specifications you have.
       </p>

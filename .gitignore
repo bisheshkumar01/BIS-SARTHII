@@ -42,3 +42,7 @@ Thumbs.db
 .vscode/
 .idea/
 .claude/
+
+
+# Local scratch assets (fonts, zips, etc. not yet wired into the app)
+/assests/

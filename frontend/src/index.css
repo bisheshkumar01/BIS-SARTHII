@@ -20,6 +20,53 @@
   font-display: swap;
 }
 
+/* Site-wide face, everything except the header (which keeps Claire Hand above). Named
+   "Helvetica Local" rather than "Helvetica" so it can never collide with a same-named
+   font already installed on the visitor's OS — the local one always wins unambiguously.
+   Three real weights plus their italics; the zip also shipped a compressed cut and a
+   rounded-bold cut, left out deliberately since those are distinct display faces, not
+   weights of this one, and folding them in under fake weight numbers would make the
+   browser guess between unrelated designs. */
+@font-face {
+  font-family: "Helvetica Local";
+  src: url("./assets/fonts/Helvetica-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Local";
+  src: url("./assets/fonts/Helvetica.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Local";
+  src: url("./assets/fonts/Helvetica-Oblique.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Local";
+  src: url("./assets/fonts/Helvetica-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Local";
+  src: url("./assets/fonts/Helvetica-BoldOblique.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 /*
   BIS SARTHI design tokens.
   Navy = authority/trust (echoes BIS's own institutional identity).
@@ -28,18 +75,14 @@
   so it stays meaningful instead of decorative.
 */
 @theme {
-  /* Two families, and the contrast between them is the system.
+  /* One family for the whole site, in the header's place: Helvetica Local, at the three
+     real weights above. Both tokens point at it — headings and body differ by weight and
+     size here, not by typeface — the header alone opts out via its own inline style,
+     which names Claire Hand first and falls back to these tokens only if that fails.
 
-     Playfair Display carries display type: high-contrast, editorial, enough personality to
-     make a headline an identity rather than a size.
-
-     Public Sans carries everything functional. It was drawn for the US Web Design System —
-     government forms, legal text, dense interfaces — which is exactly the register a
-     compliance tool needs, and it disappears when read rather than performing.
-
-     Hindi falls through to Noto Sans Devanagari per-glyph; neither Latin face covers it. */
-  --font-display: "Playfair Display", "Noto Sans Devanagari", Georgia, serif;
-  --font-body: "Public Sans", "Noto Sans Devanagari", system-ui, sans-serif;
+     Hindi falls through to Noto Sans Devanagari per-glyph; Helvetica has no coverage for it. */
+  --font-display: "Helvetica Local", "Noto Sans Devanagari", Arial, sans-serif;
+  --font-body: "Helvetica Local", "Noto Sans Devanagari", Arial, sans-serif;
   /* Tailwind builds its font-sans utility from this token, so body and sans stay one thing. */
   --font-sans: var(--font-body);
 
@@ -82,15 +125,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Display type. Playfair is drawn with generous sidebearings and thin hairlines; tightening
-   it closes the counters and the contrast stops reading, so tracking stays near neutral and
-   only comes in slightly at the largest sizes. */
+/* Display type. Helvetica is a grotesque, drawn tight already — unlike the Didot-style
+   serif this replaced, it doesn't need tracking pulled in to read as a headline. */
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
 }
 
-/* h1 and h2 are display by default, so a heading is Playfair whether or not the markup
+/* h1 and h2 are display by default, so a heading uses this face whether or not the markup
    remembered the class. */
 h1,
 h2 {
@@ -108,9 +150,8 @@ h1.font-display,
   letter-spacing: -0.02em;
 }
 
-/* Eyebrow labels are interface, not editorial — Public Sans, per the system. Wide tracking
-   and small size make them the counterweight that lets a headline read large without
-   shouting. */
+/* Eyebrow labels: small, wide-tracked, uppercase — the counterweight that lets a headline
+   read large without shouting. */
 .eyebrow {
   font-family: var(--font-body);
   font-weight: 600;
@@ -119,7 +160,7 @@ h1.font-display,
   font-size: 0.6875rem;
 }
 
-/* Playfair Display has no Devanagari coverage, so Hindi headings fall through to Noto and would
+/* Helvetica has no Devanagari coverage, so Hindi headings fall through to Noto and would
    otherwise inherit Latin tracking that crowds the matras. */
 :lang(hi) .font-display,
 .font-display:lang(hi) {

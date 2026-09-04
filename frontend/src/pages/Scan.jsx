@@ -14,7 +14,7 @@ export default function Scan() {
         <span className="inline-flex items-center gap-2 rounded-full bg-saffron-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-saffron-600">
           <ScanLine className="h-3.5 w-3.5" /> Product Scanner
         </span>
-        <h1 className="font-display mt-4 text-3xl font-extrabold text-navy-900">
+        <h1 className="font-display mt-4 text-3xl font-bold text-navy-900">
           Upload a photo — we'll read the rest
         </h1>
         <p className="mx-auto mt-2 max-w-xl text-navy-700/65">

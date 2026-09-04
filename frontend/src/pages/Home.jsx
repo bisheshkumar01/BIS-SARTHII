@@ -71,7 +71,7 @@ export default function Home() {
         />
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pt-28">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="font-display font-extrabold text-white">
+            <h1 className="font-display font-bold text-white">
               Stop guessing your way through
               <span className="text-saffron-400"> BIS certification.</span>
             </h1>
@@ -139,7 +139,7 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow text-saffron-600">How it works</span>
-          <h2 className="font-display mt-3 text-3xl font-extrabold text-navy-900 sm:text-[2.6rem] sm:leading-[1.1]">
+          <h2 className="font-display mt-3 text-3xl font-bold text-navy-900 sm:text-[2.6rem] sm:leading-[1.1]">
             From a vague product to an actionable compliance path
           </h2>
         </div>
@@ -147,7 +147,7 @@ export default function Home() {
           {steps.map((s, i) => (
             <div key={s.n} className="relative">
               <div className="flex items-center gap-3">
-                <span className="font-display text-5xl font-black tabular-nums text-navy-900/[0.09]">{s.n}</span>
+                <span className="font-display text-5xl font-bold tabular-nums text-navy-900/[0.09]">{s.n}</span>
                 {i < steps.length - 1 && (
                   <span className="hidden h-px flex-1 bg-navy-900/10 md:block" />
                 )}
@@ -164,7 +164,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <span className="eyebrow text-saffron-400">Why not just ask a chatbot?</span>
-            <h2 className="font-display mt-3 text-3xl font-extrabold text-white sm:text-[2.6rem] sm:leading-[1.1]">
+            <h2 className="font-display mt-3 text-3xl font-bold text-white sm:text-[2.6rem] sm:leading-[1.1]">
               Not a generic AI. A compliance navigator.
             </h2>
           </div>
@@ -188,7 +188,7 @@ export default function Home() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div>
             <span className="eyebrow text-saffron-600">Trust, by design</span>
-            <h2 className="font-display mt-3 text-3xl font-extrabold text-navy-900 sm:text-[2.6rem] sm:leading-[1.1]">
+            <h2 className="font-display mt-3 text-3xl font-bold text-navy-900 sm:text-[2.6rem] sm:leading-[1.1]">
               If we can't verify it, we say so.
             </h2>
             <p className="mt-4 max-w-lg text-base leading-relaxed text-navy-700/70">
@@ -242,7 +242,7 @@ export default function Home() {
       {/* USER TYPES */}
       <section className="border-t border-navy-900/5 bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="font-display text-center text-2xl font-extrabold text-navy-900">
+          <h2 className="font-display text-center text-2xl font-bold text-navy-900">
             Built for everyone who deals with BIS
           </h2>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -267,7 +267,7 @@ export default function Home() {
             style={{ background: 'var(--color-saffron-500)' }}
           />
           <div className="relative">
-            <h2 className="font-display text-3xl font-extrabold text-white sm:text-[2.6rem] sm:leading-[1.1]">
+            <h2 className="font-display text-3xl font-bold text-white sm:text-[2.6rem] sm:leading-[1.1]">
               Ready to find your standard?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-white/65">

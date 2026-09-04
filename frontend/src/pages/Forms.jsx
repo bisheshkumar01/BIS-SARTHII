@@ -9,7 +9,7 @@ const forms = [
 export default function Forms() {
   return (
     <div className="mx-auto max-w-4xl px-6 py-14">
-      <h1 className="font-display text-3xl font-extrabold text-navy-900">Forms Hub</h1>
+      <h1 className="font-display text-3xl font-bold text-navy-900">Forms Hub</h1>
       <p className="mt-2 text-navy-700/65">
         Ask what you need in plain language — Sarthi finds the right form for your stage.
       </p>

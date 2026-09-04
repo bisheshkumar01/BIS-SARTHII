@@ -20,7 +20,7 @@ const statusStyle = {
 export default function Roadmap() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-14">
-      <h1 className="font-display text-3xl font-extrabold text-navy-900">Your BIS Compliance Roadmap</h1>
+      <h1 className="font-display text-3xl font-bold text-navy-900">Your BIS Compliance Roadmap</h1>
       <p className="mt-2 text-navy-700/65">
         A personalised path from product to certification, with sources at every step.
       </p>
