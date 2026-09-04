@@ -54,7 +54,7 @@ const demoChats = [
 /* Horizontal stagger from the layout sketch, so the stack reads as scattered rather than
    as a rigid list. Flat below lg, where the column is narrow and any offset would either
    overflow or just look like a mistake. */
-const CHAT_OFFSETS = ['lg:ml-0 lg:mr-8', 'lg:ml-10 lg:mr-0', 'lg:-ml-6 lg:mr-12']
+const CHAT_OFFSETS = ['lg:ml-0', 'lg:ml-12', 'lg:-ml-6']
 
 const steps = [
   { n: '01', title: 'Describe or scan your product', desc: 'Type a description or upload a photo/label — Sarthi extracts what matters.' },
@@ -100,7 +100,10 @@ export default function Home() {
               'radial-gradient(ellipse at 70% 45%, rgba(10,17,40,0.55) 0%, rgba(10,17,40,0.25) 55%, transparent 80%)',
           }}
         />
-        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pt-28">
+        {/* Full-bleed rather than a centred max-w container: the two columns are meant to
+            sit in opposite corners of the viewport, so the only thing holding them off the
+            edge is the page padding. */}
+        <div className="relative px-6 pb-24 pt-20 md:px-10 md:pt-28 lg:px-16">
           <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10">
             {/* Windows sit left on desktop, per the layout sketch — but second in source
                 order so a phone shows the headline first and doesn't make the reader
@@ -109,7 +112,7 @@ export default function Home() {
               {demoChats.map((c, i) => (
                 <BorderGlow
                   key={c.q}
-                  className={`text-left ${CHAT_OFFSETS[i]}`}
+                  className={`max-w-xl text-left ${CHAT_OFFSETS[i]}`}
                   backgroundColor="#060b18"
                   colors={['#f2900f', '#0a1128', '#f7a836']}
                   glowColor="32 90 55"
@@ -133,7 +136,9 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="order-1 lg:order-2">
+            {/* ml-auto pushes the capped text block to the right edge of its column, so it
+                hugs the viewport corner instead of floating in the middle of dead space. */}
+            <div className="order-1 lg:order-2 lg:ml-auto lg:max-w-2xl">
               <h1 className="font-display font-bold text-white">
                 Stop guessing your way through
                 <span className="text-saffron-400"> BIS certification.</span>
