@@ -3,12 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "oxlint",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "vite",
+  "backend": "cd ../backend/bis-rag && python -m uvicorn app:app --reload",
+  "start": "concurrently \"npm run backend\" \"npm run dev\""
+},
   "dependencies": {
     "axios": "^1.20.0",
     "gsap": "^3.15.0",
