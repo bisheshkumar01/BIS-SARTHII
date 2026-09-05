@@ -6,6 +6,7 @@
 "scripts": {
   "dev": "vite",
   "build": "vite build",
+  "lint": "oxlint .",
   "backend": "cd ../backend/bis-rag && python -m uvicorn app:app --reload",
   "start": "concurrently \"npm run backend\" \"npm run dev\""
 },
