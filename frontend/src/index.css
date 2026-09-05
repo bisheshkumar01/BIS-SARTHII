@@ -187,6 +187,71 @@ h1.font-display,
 }
 
 /* ============================================================
+   Hero mesh gradient
+   A shader-style animated gradient built from layered radial blobs. shadergradient.co and
+   friends do this on a WebGL canvas, which means three.js + react-three-fiber — around 150 KB
+   gzipped and a GPU context, for something sitting behind text. Four CSS radial-gradients on
+   a slow transform loop are visually equivalent at this scale and cost nothing to download.
+   ============================================================ */
+
+.mesh-gradient {
+  position: absolute;
+  inset: -25%;
+  /* Larger than the hero so the blobs can drift without their edges entering the frame. */
+  background-image:
+    radial-gradient(circle at 22% 28%, rgba(242, 144, 15, 0.30), transparent 42%),
+    radial-gradient(circle at 78% 18%, rgba(47, 79, 148, 0.42), transparent 46%),
+    radial-gradient(circle at 62% 78%, rgba(217, 114, 12, 0.20), transparent 44%),
+    radial-gradient(circle at 12% 74%, rgba(34, 59, 115, 0.38), transparent 46%);
+  filter: blur(58px);
+  will-change: transform;
+  animation: mesh-drift 26s ease-in-out infinite alternate;
+}
+
+/* Two blobs move against the other two, so the field reshapes instead of merely sliding.
+   Rotation stays under 4deg — past that the movement becomes noticeable, and anything the
+   eye tracks behind a headline is a distraction rather than atmosphere. */
+@keyframes mesh-drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(2.5%, -2%, 0) rotate(2.5deg) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-2%, 2.5%, 0) rotate(-2deg) scale(1.04);
+  }
+}
+
+/* A faint saffron sheen crossing the hero every 14s, so the surface reads as lit rather
+   than flat. Very low opacity by design: it should register only peripherally. */
+.mesh-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(247, 168, 54, 0.07) 50%,
+    transparent 62%
+  );
+  background-size: 260% 260%;
+  animation: sheen-sweep 14s ease-in-out infinite;
+}
+
+@keyframes sheen-sweep {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Motion is atmosphere here, never information — hold the first frame and stop. */
+@media (prefers-reduced-motion: reduce) {
+  .mesh-gradient,
+  .mesh-sheen {
+    animation: none;
+  }
+}
+
+/* ============================================================
    Motion
    Interaction polish, kept in CSS so it costs no JS bundle. The house style is
    *subtle*: short durations, small distances, and an ease-out curve so movement
@@ -315,67 +380,3 @@ h1.font-display,
   }
 }
 
-/* ============================================================
-   Hero mesh gradient
-   A shader-style animated gradient built from layered radial blobs. shadergradient.co and
-   friends do this on a WebGL canvas, which means three.js + react-three-fiber — around 150 KB
-   gzipped and a GPU context, for something sitting behind text. Four CSS radial-gradients on
-   a slow transform loop are visually equivalent at this scale and cost nothing to download.
-   ============================================================ */
-
-.mesh-gradient {
-  position: absolute;
-  inset: -25%;
-  /* Larger than the hero so the blobs can drift without their edges entering the frame. */
-  background-image:
-    radial-gradient(circle at 22% 28%, rgba(242, 144, 15, 0.30), transparent 42%),
-    radial-gradient(circle at 78% 18%, rgba(47, 79, 148, 0.42), transparent 46%),
-    radial-gradient(circle at 62% 78%, rgba(217, 114, 12, 0.20), transparent 44%),
-    radial-gradient(circle at 12% 74%, rgba(34, 59, 115, 0.38), transparent 46%);
-  filter: blur(58px);
-  will-change: transform;
-  animation: mesh-drift 26s ease-in-out infinite alternate;
-}
-
-/* Two blobs move against the other two, so the field reshapes instead of merely sliding.
-   Rotation stays under 4deg — past that the movement becomes noticeable, and anything the
-   eye tracks behind a headline is a distraction rather than atmosphere. */
-@keyframes mesh-drift {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-  }
-  50% {
-    transform: translate3d(2.5%, -2%, 0) rotate(2.5deg) scale(1.08);
-  }
-  100% {
-    transform: translate3d(-2%, 2.5%, 0) rotate(-2deg) scale(1.04);
-  }
-}
-
-/* A faint saffron sheen crossing the hero every 14s, so the surface reads as lit rather
-   than flat. Very low opacity by design: it should register only peripherally. */
-.mesh-sheen {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    115deg,
-    transparent 38%,
-    rgba(247, 168, 54, 0.07) 50%,
-    transparent 62%
-  );
-  background-size: 260% 260%;
-  animation: sheen-sweep 14s ease-in-out infinite;
-}
-
-@keyframes sheen-sweep {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
-}
-
-/* Motion is atmosphere here, never information — hold the first frame and stop. */
-@media (prefers-reduced-motion: reduce) {
-  .mesh-gradient,
-  .mesh-sheen {
-    animation: none;
-  }
-}

@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
 import InteractiveHoverButton from '../components/ui/InteractiveHoverButton.jsx'
+import BorderGlow from '../components/BorderGlow.jsx'
+import TiltCard from '../components/TiltCard.jsx'
 import {
   ScanLine,
-  MessageCircleQuestion,
   FileSearch,
   ClipboardList,
   Route as RouteIcon,
   ShieldCheck,
   Languages,
-  ArrowRight,
   CheckCircle2,
   Factory,
   Ship,
@@ -18,13 +18,47 @@ import {
   Quote,
 } from 'lucide-react'
 
-const actions = [
-  { to: '/chat', icon: MessageCircleQuestion, label: 'Ask Sarthi', desc: 'Ask any BIS or standards question in plain language.' },
-  { to: '/scan', icon: ScanLine, label: 'Scan Product', desc: 'Upload a photo or label — we read it for you.' },
-  { to: '/standards', icon: FileSearch, label: 'Find Standard', desc: 'Match your product to the right Indian Standard.' },
-  { to: '/forms', icon: ClipboardList, label: 'Find Form', desc: 'Locate the exact BIS form you need, ranked by relevance.' },
-  { to: '/roadmap', icon: RouteIcon, label: 'Compliance Roadmap', desc: 'A step-by-step path from product to certification.' },
+/* Every exchange below was run against the real backend before being written here — each
+   returns this content with a live citation from the seed corpus. If a demo question ever
+   stops answering, this array is the thing that quietly starts lying. */
+const demoChats = [
+  {
+    q: 'Do I need BIS certification for packaged drinking water?',
+    a: (
+      <>
+        Yes — it falls under <span className="font-semibold text-saffron-400">IS 14543</span> and is
+        under compulsory certification. An FSSAI licence is separately required.
+      </>
+    ),
+    source: 'bis.gov.in — Products under Compulsory Certification',
+  },
+  {
+    q: 'Which standard applies to an LED bulb?',
+    a: (
+      <>
+        <span className="font-semibold text-saffron-400">IS 16102 (Part 1)</span> for safety —
+        certified through the CRS scheme, not the ISI mark. Part 2 covers performance.
+      </>
+    ),
+    source: 'bis.gov.in — Compulsory Registration Scheme',
+  },
+  {
+    q: 'How do I apply for an ISI mark licence?',
+    a: (
+      <>
+        Register on Manak Online, then file the{' '}
+        <span className="font-semibold text-saffron-400">Scheme I</span> application — one product,
+        one standard, one factory address.
+      </>
+    ),
+    source: 'manakonline.in — Application for grant of licence',
+  },
 ]
+
+/* Horizontal stagger only — separate cards with clear air between them, no overlap. The
+   widths vary slightly so the stack has some rhythm rather than reading as three identical
+   boxes. Flat below lg, where any offset in a narrow column looks like a mistake. */
+const CHAT_LAYOUT = ['lg:ml-0 lg:w-full', 'lg:ml-32 lg:w-[95%]', 'lg:-ml-8 lg:w-[97%]']
 
 const steps = [
   { n: '01', title: 'Describe or scan your product', desc: 'Type a description or upload a photo/label — Sarthi extracts what matters.' },
@@ -59,79 +93,100 @@ export default function Home() {
         <div className="mesh-gradient" aria-hidden="true" />
         <div className="mesh-sheen" aria-hidden="true" />
         <div className="bg-grid absolute inset-0 opacity-30" aria-hidden="true" />
-        {/* Darkened toward the centre so the headline keeps its contrast ratio wherever
-            the blobs happen to drift. */}
+        {/* Darkened under the headline so it keeps its contrast ratio wherever the blobs
+            happen to drift. The anchor sits right of centre because that is where the text
+            column now is — left of it is the window stack, which needs no such backing. */}
         <div
           className="absolute inset-0"
           aria-hidden="true"
           style={{
             background:
-              'radial-gradient(ellipse at 50% 45%, rgba(10,17,40,0.55) 0%, rgba(10,17,40,0.25) 55%, transparent 80%)',
+              'radial-gradient(ellipse at 70% 45%, rgba(10,17,40,0.55) 0%, rgba(10,17,40,0.25) 55%, transparent 80%)',
           }}
         />
-        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pt-28">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="font-display font-bold text-white">
-              Stop guessing your way through
-              <span className="text-saffron-400"> BIS certification.</span>
-            </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/70">
-              Most manufacturers discover what they needed after the application is
-              rejected. Sarthi maps the standard, the testing, and the forms before you
-              start.
-            </p>
-
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link to="/chat" tabIndex={-1}>
-                <InteractiveHoverButton text="Ask Sarthi" variant="solid" />
-              </Link>
-              <Link
-                to="/scan"
-                className="press inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-base font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
-              >
-                <ScanLine className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" /> Scan a Product
-              </Link>
+        {/* Full-bleed rather than a centred max-w container: the two columns are meant to
+            sit in opposite corners of the viewport, so the only thing holding them off the
+            edge is the page padding. */}
+        <div className="relative px-6 pb-24 pt-20 md:px-10 md:pt-28 lg:px-16">
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10">
+            {/* Windows sit left on desktop, per the layout sketch — but second in source
+                order so a phone shows the headline first and doesn't make the reader
+                scroll past three mock windows to find out what the product is. */}
+            <div className="order-2 space-y-6 lg:order-1">
+              {demoChats.map((c, i) => (
+                /* Layout classes live on the tilt wrapper, since that is now the positioned
+                   element; BorderGlow just fills it. */
+                <TiltCard key={c.q} max={16} className={`max-w-2xl ${CHAT_LAYOUT[i]}`}>
+                  <BorderGlow
+                    className="text-left"
+                    backgroundColor="#060b18"
+                    colors={['#f2900f', '#0a1128', '#f7a836']}
+                    glowColor="32 90 55"
+                    borderRadius={16}
+                    glowRadius={20}
+                  >
+                    <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="space-y-3.5 px-5 py-6">
+                      <div className="ml-auto max-w-[85%] rounded-xl rounded-tr-sm bg-white/10 px-4 py-2.5 text-sm text-white/90">
+                        {c.q}
+                      </div>
+                      <div className="max-w-[92%] rounded-xl rounded-tl-sm border-l-2 border-saffron-400 bg-white/5 px-4 py-3 text-sm leading-relaxed text-white/80">
+                        {c.a}
+                      </div>
+                    </div>
+                    {/* The source line is the product's whole promise made visible — and it
+                      gives the card the extra height it needed without dead padding. */}
+                    <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3 text-xs text-white/40">
+                      <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-verified-500" />
+                      <span className="truncate">{c.source}</span>
+                    </div>
+                  </BorderGlow>
+                </TiltCard>
+              ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/55">
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-verified-500" /> Evidence-backed answers
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-verified-500" /> Official BIS sources only
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-verified-500" /> English &amp; हिंदी
-              </span>
+            {/* ml-auto pushes the capped text block to the right edge of its column, so it
+                hugs the viewport corner instead of floating in the middle of dead space. */}
+            <div className="order-1 lg:order-2 lg:ml-auto lg:max-w-2xl">
+              <h1 className="font-display font-bold text-white">
+                Stop guessing your way through
+                <span className="text-saffron-400"> BIS certification.</span>
+              </h1>
+              <p className="mt-5 text-lg leading-relaxed text-white/70">
+                Most manufacturers discover what they needed after the application is rejected.
+                Sarthi maps the standard, the testing, and the forms before you start.
+              </p>
+
+              <div className="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <Link to="/chat" tabIndex={-1}>
+                  <InteractiveHoverButton text="Ask Sarthi" variant="solid" />
+                </Link>
+                <Link
+                  to="/scan"
+                  className="press inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-base font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+                >
+                  <ScanLine className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" />{' '}
+                  Scan a Product
+                </Link>
+              </div>
+
+              <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/55">
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-verified-500" /> Evidence-backed answers
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-verified-500" /> Official BIS sources only
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-verified-500" /> English &amp; हिंदी
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ACTION CARDS */}
-      {/* relative+z-10: the hero above is position:relative, so without its own
-          stacking context this section paints *under* it and the cards get clipped. */}
-      <section className="relative z-10 mx-auto -mt-12 max-w-7xl px-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {actions.map((a, i) => (
-            <Link
-              key={a.to}
-              to={a.to}
-              style={{ '--delay': `${i * 70}ms` }}
-              className="card card-hover animate-rise group flex flex-col gap-3 p-5"
-            >
-              <span className="icon-tile inline-flex h-11 w-11 items-center justify-center rounded-xl bg-navy-900/5 text-navy-800 group-hover:bg-saffron-100 group-hover:text-saffron-600">
-                <a.icon className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="flex items-center gap-1 text-sm font-semibold text-navy-900">
-                  {a.label}
-                  <ArrowRight className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                </p>
-                <p className="mt-1 text-xs leading-relaxed text-navy-700/65">{a.desc}</p>
-              </div>
-            </Link>
-          ))}
         </div>
       </section>
 
@@ -147,7 +202,9 @@ export default function Home() {
           {steps.map((s, i) => (
             <div key={s.n} className="relative">
               <div className="flex items-center gap-3">
-                <span className="font-display text-5xl font-bold tabular-nums text-navy-900/[0.09]">{s.n}</span>
+                <span className="font-display text-5xl font-bold tabular-nums text-navy-900/[0.09]">
+                  {s.n}
+                </span>
                 {i < steps.length - 1 && (
                   <span className="hidden h-px flex-1 bg-navy-900/10 md:block" />
                 )}
