@@ -20,6 +20,7 @@ import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 SOURCE_FILE = "bis_documents.json"
+CRS_PRODUCTS_FILE = "bis_crs_products.json"
 DB_FILE = "bis_vector_store.pkl"
 
 
@@ -28,8 +29,28 @@ def load_documents(path):
         return json.load(f)
 
 
+def crs_products_to_chunks(products):
+    """Turn each CRS product row into a retrievable text chunk."""
+    chunks = []
+    for p in products:
+        text = (
+            f"The product '{p['product']}' falls under BIS's Compulsory Registration "
+            f"Scheme (CRS) and must comply with {p['is_number']}. "
+            f"This requirement has been in effect since {p['date_of_implementation']}."
+        )
+        chunks.append({
+            "id": f"crs_{p['sl_no']}",
+            "title": f"CRS requirement: {p['product']}",
+            "text": text,
+        })
+    return chunks
+
+
 def build_database():
     docs = load_documents(SOURCE_FILE)
+    crs_products = load_documents(CRS_PRODUCTS_FILE)
+    docs = docs + crs_products_to_chunks(crs_products)
+
     texts = [f"{d['title']}. {d['text']}" for d in docs]
 
     vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
